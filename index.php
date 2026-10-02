@@ -42,7 +42,7 @@
 <!-- ================= HERO ================= -->
 <section class="hero">
 
-    <div class="hero-overlay"></div>
+    <div class="hero-overlay">
 
     <div class="hero-content">
 
@@ -68,7 +68,7 @@
             <a href="contact.html" class="btn secondary">
                 Contact Us
             </a>
-        </div>
+        </div></div>
 
     </div>
 
