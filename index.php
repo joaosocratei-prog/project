@@ -26,12 +26,12 @@
     </div>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">Our School</a>
-        <a href="academics.html">Academics</a>
-        <a href="activities.html">Activities</a>
-        <a href="news.html">Updates</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.php">Home</a>
+        <a href="about.php">Our School</a>
+        <a href="academics.php">Academics</a>
+        <a href="activities.php">Activities</a>
+        <a href="news.php">Updates</a>
+        <a href="contact.php">Contact</a>
     </nav>
 
     <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">☰</button>
