@@ -134,7 +134,7 @@ footer{text-align:center;padding:20px;background:#0b3d91;color:#fff;font-size:.9
   <div class="map">
     <h2>Find Us</h2>
     <p>We are about ten kilometres from Nyamagabe town, close to Kigeme Cathedral and Kigeme Hospital.</p>
-    <a href="https://www.google.com/maps/search/?api=1&query=GS+Kigeme+A+Nyamagabe+Rwanda" target="_blank" rel="noopener">Open in Google Maps</a>
+    <a href="https://www.google.com/maps/place/Groupe+Scolaire+de+Kigeme/@-2.4815146,29.5276019,216m/data=!3m1!1e3!4m14!1m7!3m6!1s0x19c31900211fc65f:0x26bedc56755549c0!2sKigeme+TVET+School!8m2!3d-2.4832783!4d29.5284183!16s%2Fg%2F11w386hsx6!3m5!1s0x19c3195b9369d2dd:0x927a71ee5b5bb120!8m2!3d-2.4810353!4d29.5281161!16s%2Fg%2F11c2j3l7d1?authuser=0&entry=ttu&g_ep=EgoyMDI2MTAwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Open in Google Maps</a>
   </div>
 </main>
 
