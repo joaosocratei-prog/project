@@ -27,7 +27,7 @@
 
     <nav>
         <a href="index.php">Home</a>
-        <a href="about.php">Our School</a>
+        <a href="https://github.com/joaosocratei-prog/project/blob/main/about.php">Our School</a>
         <a href="academics.php">Academics</a>
         <a href="activities.php">Activities</a>
         <a href="news.php">Updates</a>
