@@ -8,6 +8,7 @@
     <title>GSKIGEME -A-</title>
 
     <link rel="icon" href="images/favicon.png">
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="in.css">
 </head>
 
@@ -389,6 +390,7 @@
 
 
 <script src="js/script.js"></script>
+<script src="js/smooth.js"></script>
 <script>
 document.getElementById('newsletter-form').addEventListener('submit', function (e) {
     e.preventDefault();
