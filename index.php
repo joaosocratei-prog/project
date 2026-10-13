@@ -62,11 +62,11 @@
         </p>
 
         <div class="hero-buttons">
-            <a href="about.html" class="btn primary">
+            <a href="about.php" class="btn primary">
                 Discover GS KIGEME-A-
             </a>
 
-            <a href="contact.html" class="btn secondary">
+            <a href="contact.php" class="btn secondary">
                 Contact Us
             </a>
         </div>
@@ -111,7 +111,7 @@
                 creativity and critical thinking.
             </p>
 
-            <a href="academics.html">
+            <a href="academics.php">
                 View More →
             </a>
 
@@ -130,7 +130,7 @@
                 their talents.
             </p>
 
-            <a href="activities.html">
+            <a href="activities.php">
                 View More →
             </a>
 
@@ -148,7 +148,7 @@
                 announcements and upcoming events.
             </p>
 
-            <a href="news.html">
+            <a href="news.php">
                 View More →
             </a>
 
@@ -286,7 +286,7 @@
 </section>
 
 
-<!-- ================= NEWSLETTER ================= -->
+<!-- ================= NEWSLETTER / REGISTRATION ================= -->
 <section class="newsletter">
 
     <h2>Stay Updated</h2>
@@ -303,6 +303,7 @@
             name="name"
             type="text"
             placeholder="Your full name"
+            maxlength="100"
             required
         >
 
@@ -312,6 +313,7 @@
             name="email"
             type="email"
             placeholder="Your email address"
+            maxlength="150"
             required
         >
 
@@ -320,6 +322,14 @@
         </button>
 
     </form>
+
+    <p id="newsletter-msg" role="status" style="margin-top:12px;min-height:1.4em;"></p>
+
+    <small style="display:block;max-width:520px;margin:8px auto 0;opacity:.85;">
+        Iyo ukanze Subscribe, urubuga ruzagusaba uruhushya rwo gukoresha location yawe.
+        Izina, email na location bibikwa kugira ngo tubashe kukumenyesha
+        mu gihe habaye ikibazo kuri site yacu.
+    </small>
 
 </section>
 
@@ -347,10 +357,10 @@
 
             <h3>Quick Links</h3>
 
-            <a href="index.html">Home</a>
-            <a href="about.html">Our School</a>
-            <a href="academics.html">Academics</a>
-            <a href="activities.html">Activities</a>
+            <a href="index.php">Home</a>
+            <a href="about.php">Our School</a>
+            <a href="academics.php">Academics</a>
+            <a href="activities.php">Activities</a>
 
         </div>
 
@@ -380,12 +390,57 @@
 
 <script src="js/script.js"></script>
 <script>
-    // Basic newsletter form handling (replace with real endpoint later)
-    document.getElementById('newsletter-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        alert('Thanks for subscribing! We will keep you updated.');
-        this.reset();
-    });
+document.getElementById('newsletter-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = this;
+    const msg = document.getElementById('newsletter-msg');
+    const btn = form.querySelector('button[type="submit"]');
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+
+    if (!navigator.geolocation) {
+        msg.textContent = 'Browser yawe ntishyigikira location.';
+        return;
+    }
+
+    btn.disabled = true;
+    msg.textContent = 'Turasaba uruhushya rwa location...';
+
+    // Hano browser isaba uruhushya (Allow / Block)
+    navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+            // Yemeye (Allow): bika muri store_db.fellows
+            try {
+                const res = await fetch('save_fellow.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        latitude: pos.coords.latitude,
+                        longitude: pos.coords.longitude,
+                        accuracy_m: pos.coords.accuracy
+                    })
+                });
+                const out = await res.json();
+                msg.textContent = out.message;
+                if (res.ok) form.reset();
+            } catch (err) {
+                msg.textContent = 'Ntibyakunze kohereza kuri server.';
+            }
+            btn.disabled = false;
+        },
+        (err) => {
+            // Yanze (Block) cyangwa habaye ikibazo: nta kibitswe
+            msg.textContent = err.code === 1
+                ? 'Wanze gutanga location, nta kibitswe.'
+                : 'Ntibyashobotse kubona location.';
+            btn.disabled = false;
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+    );
+});
 </script>
 
 </body>
