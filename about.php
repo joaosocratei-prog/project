@@ -38,9 +38,9 @@ $innovation_cards = [
 ];
 
 $team = [
-    ['H', '[Name]', 'Head Teacher'],
-    ['D', '[Name]', 'Deputy Head Teacher (Studies)'],
-    ['W', '[Name]', 'Website Team (Students / Developers)'],
+    ['H', '[HAKIZIMANA Emmanuel]', 'Head Teacher'],
+    ['D', '[HAKIZIMANA Michel]', 'Deputy Head Teacher (Studies)'],
+    ['W', '[miracle makers]', 'Website Team (Students / Developers)'],
 ];
 
 $contact = [
@@ -92,7 +92,7 @@ footer{text-align:center;padding:20px;background:#0b3d91;color:#fff;font-size:.9
 </nav>
 
 <header>
-  <h1><?= e($school['name']) ?></h1>
+  <h1><?= e($school['GS KIGEME-A']) ?></h1>
   <p><?= e($school['subtitle']) ?></p>
 </header>
 
