@@ -1,274 +1,184 @@
+<?php
+/*
+  ABOUT US PAGE (PHP version)
+  To change any text, edit the arrays below. The HTML at the bottom
+  repeats the cards automatically with loops, so you never need to copy HTML.
+*/
 
+$school = [
+    'name'     => 'GS Kigeme A',
+    'subtitle' => "Groupe Scolaire Kigeme A, Nyamagabe District, Southern Province, Rwanda. Educating today's learners to lead tomorrow.",
+    'year'     => date('Y'),
+];
+
+$menu = [
+    'index.php'   => 'Home',
+    '#who'        => 'Who We Are',
+    '#mission'    => 'Mission',
+    '#innovation' => 'Innovation',
+    '#team'       => 'Team',
+    '#contact'    => 'Contact',
+];
+
+$who = 'GS Kigeme A is a school located in Kigeme, Nyamagabe District. Since [year founded], we have been committed to giving every student a quality education based on discipline, knowledge and good values. Our teachers and students work together to build a strong and successful community. Today we welcome about [number] students taught by [number] dedicated teachers.';
+
+$mission_cards = [
+    ['Our Mission', 'To provide quality, inclusive education that prepares students with knowledge, skills and values for life.'],
+    ['Our Vision',  'To be a leading school in Nyamagabe District, producing responsible and innovative citizens.'],
+    ['Our Values',  'Discipline, respect, hard work, integrity and love for our country.'],
+];
+
+$innovation_intro = 'We believe education must move with the times. Our school encourages creativity, technology and problem solving in every classroom.';
+
+$innovation_cards = [
+    ['Digital Learning',          'Use of computers and ICT tools to make lessons more practical and interesting.'],
+    ['Science & Innovation Club', 'Students design projects and simple inventions that solve real problems in our community.'],
+    ['Modern Teaching Methods',   'Competence-based learning where students discuss, research and present their own ideas.'],
+    ['Green School',              'Tree planting, gardens and clean environment activities led by students.'],
+];
+
+$team = [
+    ['H', '[HAKIZIMANA Emmanuel]', 'Head Teacher'],
+    ['D', '[HAKIZIMANA Michel]', 'Deputy Head Teacher (Studies)'],
+    ['W', '[miracle makers]', 'Website Team (Students / Developers)'],
+];
+
+$contact = [
+    'School'   => 'GS Kigeme A',
+    'Location' => 'Kigeme, Nyamagabe District, Southern Province, Rwanda',
+    'Email'    => '[school email]',
+    'Phone'    => '[+250 ...]',
+];
+
+// Prints text safely on the page
+function e($text) {
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GS KIGEME A | Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Us | <?= e($school['name']) ?></title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Segoe UI,Arial,sans-serif;color:#1f2937;line-height:1.7;background:#f9fafb}
+nav{background:#0b3d91;padding:12px 20px;text-align:center}
+nav a{color:#fff;text-decoration:none;margin:0 12px;font-weight:600}
+nav a:hover{text-decoration:underline}
+header{background:linear-gradient(135deg,#0b3d91,#1e7a3c);color:#fff;text-align:center;padding:80px 20px}
+header h1{font-size:2.4rem;margin-bottom:10px}
+header p{max-width:650px;margin:auto;opacity:.95}
+section{max-width:1000px;margin:auto;padding:50px 20px}
+h2{color:#0b3d91;margin-bottom:15px;font-size:1.7rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:20px}
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Cards: green by default, smooth transition to a warm accent on hover/touch */
+.card{
+  background:#1e7a3c;
+  color:#fff;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition: background-color .45s ease, transform .3s ease, box-shadow .3s ease;
+  cursor:pointer;
+}
+.card h3{margin-bottom:8px;color:#eafff0;transition:color .45s ease}
+.card:hover,
+.card:focus-within{
+  background:#e08900;
+  box-shadow:0 10px 24px rgba(224,137,0,.35);
+  transform:translateY(-4px);
+}
+.card:hover h3,
+.card:focus-within h3{color:#1f2937}
+.card:hover p,
+.card:focus-within p{color:#1f2937}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f8f5;
-            color: #26352b;
-            line-height: 1.6;
-        }
-
-        header {
-            background: #086b3c;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 32px;
-        }
-
-        header p {
-            color: #ffdc70;
-            font-style: italic;
-        }
-
-        nav {
-            background: #064d30;
-            padding: 15px;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 10px;
-            display: inline-block;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            color: #ffdc70;
-        }
-
-        .hero {
-            background: linear-gradient(
-                rgba(0, 65, 35, 0.78),
-                rgba(0, 65, 35, 0.78)
-            ), url("images/overview.jpg");
-
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
-        }
-
-        .hero h2 {
-            font-size: 42px;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-
-        .button {
-            background: #e3b52e;
-            color: #173321;
-            text-decoration: none;
-            padding: 13px 25px;
-            border-radius: 8px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .button:hover {
-            background: white;
-        }
-
-        .section {
-            padding: 50px 20px;
-            text-align: center;
-        }
-
-        .section h2 {
-            color: #086b3c;
-            font-size: 30px;
-            margin-bottom: 15px;
-        }
-
-        .cards {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .card {
-            background: white;
-            width: 280px;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px #00000012;
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-7px);
-        }
-
-        .card h3 {
-            color: #086b3c;
-            margin-bottom: 10px;
-        }
-
-        .card a {
-            display: inline-block;
-            margin-top: 15px;
-            color: #086b3c;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .contact {
-            background: #e5f2e9;
-        }
-
-        footer {
-            background: #064d30;
-            color: white;
-            text-align: center;
-            padding: 25px 15px;
-        }
-
-        footer a {
-            color: #ffdc70;
-        }
-
-        @media (max-width: 600px) {
-            .hero h2 {
-                font-size: 30px;
-            }
-
-            header h1 {
-                font-size: 25px;
-            }
-
-            nav a {
-                margin: 6px;
-            }
-        }
-    </style>
+.innovation{background:#e8f0fb;max-width:none}
+.innovation .inner{max-width:1000px;margin:auto}
+.avatar{width:70px;height:70px;border-radius:50%;background:#0b3d91;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:12px;transition:background-color .45s ease}
+.card:hover .avatar,
+.card:focus-within .avatar{background:#1f2937}
+.contact{background:#e6f4ea;border-radius:10px;padding:30px}
+footer{text-align:center;padding:20px;background:#0b3d91;color:#fff;font-size:.9rem}
+@media(max-width:600px){header h1{font-size:1.8rem}nav a{display:inline-block;margin:4px 8px}}
+@media (prefers-reduced-motion: reduce){
+  .card,.card h3,.card p,.avatar{transition:none}
+}
+</style>
 </head>
-
 <body>
 
-  <header class="school-header">
-    <img src="images/gs logo.jpg"
-         alt="GS KIGEME A School Logo"
-         class="school-logo">
+<nav>
+  <?php foreach ($menu as $link => $label): ?>
+    <a href="<?= e($link) ?>"><?= e($label) ?></a>
+  <?php endforeach; ?>
+</nav>
 
-    <div class="school-info">
-        <h1>GS KIGEME A</h1>
-        <p>Learning Today, Leading Tomorrow</p>
-        <p>Gasaka Sector, Nyamagabe District, Rwanda</p>
-    </div>
-</header>  
+<header>
+  <h1><?= e($school['name']) ?></h1>
+  <p><?= e($school['subtitle']) ?></p>
+</header>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="academics.html">Academics</a>
-        <a href="students.html">Students</a>
-        <a href="teachers.html">Teachers</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="news.html">News</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+<section id="who">
+  <h2>Who We Are</h2>
+  <p><?= e($who) ?></p>
+</section>
 
-    <section class="hero">
-        <h2>Welcome to GS KIGEME A</h2>
-        <p>Discover knowledge, build character and prepare for a brighter future.</p>
-        <a href="admission/index.php" class="button">
-            Apply for Admission
-        </a>
-    </section>
+<section id="mission">
+  <h2>Our Mission &amp; Vision</h2>
+  <div class="grid">
+    <?php foreach ($mission_cards as [$title, $text]): ?>
+      <div class="card" tabindex="0">
+        <h3><?= e($title) ?></h3>
+        <p><?= e($text) ?></p>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</section>
 
-    <section class="section">
-        <h2>Welcome to Our School</h2>
-        <p>
-            GS KIGEME A is committed to education, personal development
-            and helping learners prepare for tomorrow's opportunities.
-        </p>
-    </section>
-
-    <section class="section">
-        <h2>Explore Our School</h2>
-
-        <div class="cards">
-
-            <div class="card">
-                <h3>📚 Academics</h3>
-                <p>Discover our academic programmes and learning activities.</p>
-                <a href="academics.html">Learn More →</a>
-            </div>
-
-            <div class="card">
-                <h3>🎓 Admission</h3>
-                <p>Visit our online admission portal to apply to our school.</p>
-                <a href="admission/index.php">Apply Now →</a>
-            </div>
-
-            <div class="card">
-                <h3>⚽ Student Life</h3>
-                <p>Explore sports, clubs, activities, and student leadership.</p>
-                <a href="students.html">Discover More →</a>
-            </div>
-
-            <div class="card">
-                <h3>👩‍🏫 Our Teachers</h3>
-                <p>Learn about our teachers and their role in education.</p>
-                <a href="teachers.html">Meet Our Teachers →</a>
-            </div>
-
-            <div class="card">
-                <h3>🖼️ Gallery</h3>
-                <p>Explore photographs of school life and activities.</p>
-                <a href="gallery.html">View Gallery →</a>
-            </div>
-
-            <div class="card">
-                <h3>📰 School News</h3>
-                <p>Read announcements and published school updates.</p>
-                <a href="news.html">Read News →</a>
-            </div>
-
+<section id="innovation" class="innovation">
+  <div class="inner">
+    <h2>Innovation at <?= e($school['name']) ?></h2>
+    <p><?= e($innovation_intro) ?></p>
+    <div class="grid">
+      <?php foreach ($innovation_cards as [$title, $text]): ?>
+        <div class="card" tabindex="0">
+          <h3><?= e($title) ?></h3>
+          <p><?= e($text) ?></p>
         </div>
-    </section>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
 
-    <section class=" section contact">
-        <h2>Contact Our School</h2>
-        <p>📍 Gasaka Sector, Nyamagabe District, Rwanda</p>
-        <p>📞 <a href="tel:0788600587">0788600587</a></p>
-        <p>
-            ✉
-            <a href="mailto:gskigeme2@yahoo.com">
-                gskigeme2@yahoo.com
-            </a>
-        </p>
-    </section>
+<section id="team">
+  <h2>Our Leadership</h2>
+  <div class="grid">
+    <?php foreach ($team as [$letter, $name, $role]): ?>
+      <div class="card" tabindex="0">
+        <div class="avatar"><?= e($letter) ?></div>
+        <h3><?= e($name) ?></h3>
+        <p><?= e($role) ?></p>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</section>
 
-    <footer>
-        <h3>GS KIGEME A</h3>
-        <p>Learning Today, Leading Tomorrow.</p>
-        <p>&copy; 2026 GS KIGEME A. All rights reserved.</p>
-    </footer>
+<section id="contact">
+  <div class="contact">
+    <h2>Contact Us</h2>
+    <p>
+      <?php foreach ($contact as $label => $value): ?>
+        <?= e($label) ?>: <?= e($value) ?><br>
+      <?php endforeach; ?>
+    </p>
+  </div>
+</section>
+
+<footer>&copy; <?= e($school['year']) ?> <?= e($school['name']) ?>. All rights reserved.</footer>
 
 </body>
 </html>
