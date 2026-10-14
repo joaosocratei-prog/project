@@ -1,449 +1,274 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GS KIGEME -A- — official school website with academics, activities, updates and school life.">
+    <title>GS KIGEME A | Home</title>
 
-    <title>GSKIGEME -A-</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <link rel="icon" href="images/favicon.png">
-    <script>document.documentElement.classList.add('js');</script>
-    <link rel="stylesheet" href="in.css">
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f8f5;
+            color: #26352b;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #086b3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        header p {
+            color: #ffdc70;
+            font-style: italic;
+        }
+
+        nav {
+            background: #064d30;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 10px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffdc70;
+        }
+
+        .hero {
+            background: linear-gradient(
+                rgba(0, 65, 35, 0.78),
+                rgba(0, 65, 35, 0.78)
+            ), url("images/overview.jpg");
+
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .button {
+            background: #e3b52e;
+            color: #173321;
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .button:hover {
+            background: white;
+        }
+
+        .section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            color: #086b3c;
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            width: 280px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px #00000012;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+        }
+
+        .card h3 {
+            color: #086b3c;
+            margin-bottom: 10px;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #086b3c;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .contact {
+            background: #e5f2e9;
+        }
+
+        footer {
+            background: #064d30;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        footer a {
+            color: #ffdc70;
+        }
+
+        @media (max-width: 600px) {
+            .hero h2 {
+                font-size: 30px;
+            }
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            nav a {
+                margin: 6px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-<header class="navbar">
+  <header class="school-header">
+    <img src="images/gs logo.jpg"
+         alt="GS KIGEME A School Logo"
+         class="school-logo">
 
-    <div class="logo">
-        <div class="logo-circle">G</div>
-
-        <div>
-            <h2>GS KIGEME -A-</h2>
-            <span>all about our school</span>
-        </div>
+    <div class="school-info">
+        <h1>GS KIGEME A</h1>
+        <p>Learning Today, Leading Tomorrow</p>
+        <p>Gasaka Sector, Nyamagabe District, Rwanda</p>
     </div>
+</header>  
 
     <nav>
-        <a href="index.php">Home</a>
-        <a href="about.php">about us</a>
-        <a href="index.php">Our School</a>
-        <a href="academics.php">Academics</a>
-        <a href="activities.php">Activities</a>
-        <a href="news.php">Updates</a>
-        <a href="contact.php">Contact</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="academics.html">Academics</a>
+        <a href="students.html">Students</a>
+        <a href="teachers.html">Teachers</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
     </nav>
 
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">☰</button>
+    <section class="hero">
+        <h2>Welcome to GS KIGEME A</h2>
+        <p>Discover knowledge, build character and prepare for a brighter future.</p>
+        <a href="admission/index.php" class="button">
+            Apply for Admission
+        </a>
+    </section>
 
-</header>
-
-
-<!-- ================= HERO ================= -->
-<section class="hero">
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-
-        <p class="small-title">WELCOME TO GS KIGEME -A-</p>
-
-        <h1>
-            A World of Knowledge
-            <br>
-            and Opportunity
-        </h1>
-
+    <section class="section">
+        <h2>Welcome to Our School</h2>
         <p>
-            Discover an inspiring learning community
-            where students grow academically,
-            socially and creatively.
+            GS KIGEME A is committed to education, personal development
+            and helping learners prepare for tomorrow's opportunities.
         </p>
+    </section>
 
-        <div class="hero-buttons">
-            <a href="about.php" class="btn primary">
-                Discover GS KIGEME-A-
-            </a>
+    <section class="section">
+        <h2>Explore Our School</h2>
 
-            <a href="contact.php" class="btn secondary">
-                Contact Us
-            </a>
-        </div>
+        <div class="cards">
 
-    </div>
-
-</section>
-
-
-<!-- ================= DISCOVER ================= -->
-<section class="discover">
-
-    <div class="section-title">
-
-        <span>DISCOVER GS KIGEME -A-</span>
-
-        <h2>
-            Opening Doors to a
-            <br>
-            Brighter Future
-        </h2>
-
-        <p>
-            Explore our academic programs, student activities
-            and opportunities for personal development.
-        </p>
-
-    </div>
-
-
-    <div class="cards">
-
-        <div class="card">
-
-            <div class="card-icon">📚</div>
-
-            <h3>Academics</h3>
-
-            <p>
-                Explore challenging academic programs
-                designed to develop knowledge,
-                creativity and critical thinking.
-            </p>
-
-            <a href="academics.php">
-                View More →
-            </a>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">🏆</div>
-
-            <h3>Activities</h3>
-
-            <p>
-                Discover sports, clubs and extracurricular
-                activities that help students discover
-                their talents.
-            </p>
-
-            <a href="activities.php">
-                View More →
-            </a>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">📰</div>
-
-            <h3>School Updates</h3>
-
-            <p>
-                Stay informed about school news,
-                announcements and upcoming events.
-            </p>
-
-            <a href="news.php">
-                View More →
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= MESSAGE ================= -->
-<section class="message">
-
-    <div class="message-image">
-        <img src="images/school.jpg" alt="GS KIGEME-A- School">
-    </div>
-
-    <div class="message-content">
-
-        <span>PRINCIPAL'S MESSAGE</span>
-
-        <h2>
-            Building Students
-            <br>
-            for the Future
-        </h2>
-
-        <p>
-            At our school, we believe education goes beyond
-            classrooms. We encourage students to develop
-            knowledge, creativity, discipline and leadership skills.
-        </p>
-
-        <p>
-            Together with parents, teachers and students,
-            we continue building a strong and supportive
-            learning community.
-        </p>
-
-        <h4>HAKIZIMANA Emmanuell</h4>
-        <small>Head of School</small>
-
-    </div>
-
-</section>
-
-
-<!-- ================= STATISTICS ================= -->
-<section class="statistics">
-
-    <div>
-        <h2>1000+</h2>
-        <p>Students</p>
-    </div>
-
-    <div>
-        <h2>100+</h2>
-        <p>Staff</p>
-    </div>
-
-    <div>
-        <h2>30</h2>
-        <p>Average Class Size</p>
-    </div>
-
-    <div>
-        <h2>95+</h2>
-        <p>Years of Legacy</p>
-    </div>
-
-</section>
-
-
-<!-- ================= COMMUNITY ================= -->
-<section class="community">
-
-    <div class="section-title">
-
-        <span>OUR COMMUNITY</span>
-
-        <h2>
-            Learning Beyond
-            <br>
-            the Classroom
-        </h2>
-
-    </div>
-
-
-    <div class="community-grid">
-
-        <article>
-            <img src="images/games.jpg" alt="School Games">
-
-            <div>
-                <h3>Games</h3>
-
-                <p>
-                    Sports develop teamwork, discipline,
-                    resilience and friendship.
-                </p>
+            <div class="card">
+                <h3>📚 Academics</h3>
+                <p>Discover our academic programmes and learning activities.</p>
+                <a href="academics.html">Learn More →</a>
             </div>
-        </article>
 
-
-        <article>
-            <img src="images/learner.png" alt="Student Innovation">
-
-            <div>
-                <h3>Innovation</h3>
-
-                <p>
-                    Student projects encourage creativity,
-                    collaboration and problem solving.
-                </p>
+            <div class="card">
+                <h3>🎓 Admission</h3>
+                <p>Visit our online admission portal to apply to our school.</p>
+                <a href="admission/index.php">Apply Now →</a>
             </div>
-        </article>
 
-
-        <article>
-            <img src="images/culture.jpg" alt="School Culture">
-
-            <div>
-                <h3>Culture</h3>
-
-                <p>
-                    We celebrate culture, creativity,
-                    traditional dance and student talents.
-                </p>
+            <div class="card">
+                <h3>⚽ Student Life</h3>
+                <p>Explore sports, clubs, activities, and student leadership.</p>
+                <a href="students.html">Discover More →</a>
             </div>
-        </article>
 
-    </div>
+            <div class="card">
+                <h3>👩‍🏫 Our Teachers</h3>
+                <p>Learn about our teachers and their role in education.</p>
+                <a href="teachers.html">Meet Our Teachers →</a>
+            </div>
 
-</section>
+            <div class="card">
+                <h3>🖼️ Gallery</h3>
+                <p>Explore photographs of school life and activities.</p>
+                <a href="gallery.html">View Gallery →</a>
+            </div>
 
-
-<!-- ================= NEWSLETTER / REGISTRATION ================= -->
-<section class="newsletter">
-
-    <h2>Stay Updated</h2>
-
-    <p>
-        Receive the latest school news and announcements.
-    </p>
-
-    <form id="newsletter-form">
-
-        <label for="subscriber-name" class="sr-only">Your full name</label>
-        <input
-            id="subscriber-name"
-            name="name"
-            type="text"
-            placeholder="Your full name"
-            maxlength="100"
-            required
-        >
-
-        <label for="subscriber-email" class="sr-only">Your email address</label>
-        <input
-            id="subscriber-email"
-            name="email"
-            type="email"
-            placeholder="Your email address"
-            maxlength="150"
-            required
-        >
-
-        <button type="submit">
-            Subscribe
-        </button>
-
-    </form>
-
-    <p id="newsletter-msg" role="status" style="margin-top:12px;min-height:1.4em;"></p>
-
-    <small style="display:block;max-width:520px;margin:8px auto 0;opacity:.85;">
-        Iyo ukanze Subscribe, urubuga ruzagusaba uruhushya rwo gukoresha location yawe.
-        Izina, email na location bibikwa kugira ngo tubashe kukumenyesha
-        mu gihe habaye ikibazo kuri site yacu.
-    </small>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-<footer>
-
-    <div class="footer-content">
-
-        <div>
-            <h2>KIGEME</h2>
-
-            <p>
-                GS KIGEME -A-
-            </p>
-
-            <p>
-                A community of knowledge,
-                discipline and excellence.
-            </p>
-        </div>
-
-
-        <div>
-
-            <h3>Quick Links</h3>
-
-            <a href="index.php">Home</a>
-            <a href="about.php">Our School</a>
-            <a href="academics.php">Academics</a>
-            <a href="activities.php">Activities</a>
+            <div class="card">
+                <h3>📰 School News</h3>
+                <p>Read announcements and published school updates.</p>
+                <a href="news.html">Read News →</a>
+            </div>
 
         </div>
+    </section>
 
+    <section class=" section contact">
+        <h2>Contact Our School</h2>
+        <p>📍 Gasaka Sector, Nyamagabe District, Rwanda</p>
+        <p>📞 <a href="tel:0788600587">0788600587</a></p>
+        <p>
+            ✉
+            <a href="mailto:gskigeme2@yahoo.com">
+                gskigeme2@yahoo.com
+            </a>
+        </p>
+    </section>
 
-        <div>
-
-            <h3>Contact</h3>
-
-            <p>Butare, Rwanda</p>
-            <p>Email: info@gskigeme.rw</p>
-            <p>Phone: +250 788 000 000</p>
-
-        </div>
-
-    </div>
-
-
-    <div class="copyright">
-
-        © 2026 GS KIGEME-A-.
-        All Rights Reserved.
-
-    </div>
-
-</footer>
-
-
-<script src="js/script.js"></script>
-<script src="js/smooth.js"></script>
-<script>
-document.getElementById('newsletter-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const form = this;
-    const msg = document.getElementById('newsletter-msg');
-    const btn = form.querySelector('button[type="submit"]');
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-
-    if (!navigator.geolocation) {
-        msg.textContent = 'Browser yawe ntishyigikira location.';
-        return;
-    }
-
-    btn.disabled = true;
-    msg.textContent = 'Turasaba uruhushya rwa location...';
-
-    // Hano browser isaba uruhushya (Allow / Block)
-    navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-            // Yemeye (Allow): bika muri store_db.fellows
-            try {
-                const res = await fetch('save_fellow.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        latitude: pos.coords.latitude,
-                        longitude: pos.coords.longitude,
-                        accuracy_m: pos.coords.accuracy
-                    })
-                });
-                const out = await res.json();
-                msg.textContent = out.message;
-                if (res.ok) form.reset();
-            } catch (err) {
-                msg.textContent = 'Ntibyakunze kohereza kuri server.';
-            }
-            btn.disabled = false;
-        },
-        (err) => {
-            // Yanze (Block) cyangwa habaye ikibazo: nta kibitswe
-            msg.textContent = err.code === 1
-                ? 'Wanze gutanga location, nta kibitswe.'
-                : 'Ntibyashobotse kubona location.';
-            btn.disabled = false;
-        },
-        { enableHighAccuracy: true, timeout: 10000 }
-    );
-});
-</script>
+    <footer>
+        <h3>GS KIGEME A</h3>
+        <p>Learning Today, Leading Tomorrow.</p>
+        <p>&copy; 2026 GS KIGEME A. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
