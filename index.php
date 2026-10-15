@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>GS KIGEME A | Official School Website</title>
-    <meta name="description" content=" Welcome to GS KIGEME A in Nyamagabe, Rwanda. Learning today, leading tomorrow.">
+    <meta name="description" content="Welcome to GS KIGEME A in Nyamagabe, Rwanda. Learning today, leading tomorrow.">
 
     <style>
         * {
@@ -15,7 +15,7 @@
             box-sizing: border-box;
         }
 
-        : root {
+        :root {
             --green: #087443;
             --dark-green: #064b30;
             --gold: #f2c14e;
@@ -266,7 +266,7 @@
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .card: hover {
+        .card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px #064b3020;
         }
@@ -496,7 +496,7 @@
     <header class="school-header">
 
         <img
-            src="images/gs%20logo.jpg"
+            src="images/gs logo.jpg"
             alt="GS KIGEME A School Logo"
             class="school-logo"
         >
