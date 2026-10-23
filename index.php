@@ -608,14 +608,14 @@
         </div>
 
         <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="academics.html">Academics</a>
-            <a href="students.html">Students</a>
-            <a href="teachers.html">Teachers</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="news.html">News</a>
-            <a href="contact.html">Contact</a>
+            <a href="index.php">Home</a>
+            <a href="about.php">About</a>
+            <a href="academics.php">Academics</a>
+            <a href="students.php">Students</a>
+            <a href="teachers.php">Teachers</a>
+            <a href="gallery.php">Gallery</a>
+            <a href="news.php">News</a>
+            <a href="contact.php">Contact</a>
             <a href="admission/index.php" class="apply-button">Apply Now</a>
         </nav>
     </header>
