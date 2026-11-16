@@ -1,2198 +1,1300 @@
 
 <?php
-// ================================================================
-// GS KIGEME A - ABOUT US PAGE
-// Complete PHP + HTML + CSS + JavaScript in one file.
-// Modern UI/UX and accessibility improvements.
-// ================================================================
-
-$school = [
-    'name'     => 'GS KIGEME A',
-    'motto'    => 'Learning Today, Leading Tomorrow',
-    'location' => 'Kigeme, Gasaka, Nyamagabe District, Rwanda',
-    'phone'    => '0788600587',
-    'email'    => 'gskigeme2@yahoo.com',
-    'logo'     => 'images/gs logo.jpg',
-];
-
-$nav = [
-    'index.php'    => 'Home',
-    'about.php'    => 'About',
-    'academic.php' => 'Academics',
-    'students.php' => 'Students',
-    'teachers.php' => 'Teachers',
-    'gallery.php'  => 'Gallery',
-    'news.php'     => 'News',
-    'contact.php'  => 'Contact',
-];
-
-$currentPage = basename($_SERVER['PHP_SELF']);
-
-function e($value) {
-    return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+// Small PHP helper for safe output. No Node.js or external framework is required.
+function e($value): string {
+    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 }
 
-// About page sections
-$sections = [
-    'who'        => 'Who We Are',
-    'values'     => 'Mission and Values',
-    'history'    => 'Our History',
-    'leadership' => 'Leadership',
-    'location'   => 'Our Location',
-];
+$currentYear = date('Y');
+$currentPage = basename($_SERVER['PHP_SELF'] ?? 'about.php');
 
-// School history
-$timeline = [
-    [
-        '1965',
-        'The Beginning',
-        'GS Kigeme-A began its educational journey as an auxiliary instructor institution.'
-    ],
-    [
-        '1967',
-        'Ordinary Level Education',
-        'The school introduced Ordinary Level education as part of its development.'
-    ],
-    [
-        '1970',
-        'Teacher Training Development',
-        'The institution developed into an Inferior Teacher Training Centre.'
-    ],
-    [
-        '1972',
-        'First Graduation',
-        'The institution celebrated its first graduation.'
-    ],
-    [
-        '1981',
-        'Teacher Training Expansion',
-        'The institution developed into a full Teacher Training Centre.'
-    ],
-    [
-        '1990',
-        'Groupe Scolaire Kigeme',
-        'The institution became known as Groupe Scolaire Kigeme.'
-    ],
-    [
-        '2026',
-        'Continuing the Educational Journey',
-        'GS Kigeme-A continues its commitment to education, discipline, knowledge and student development.'
-    ],
+$navigation = [
+    'Home'      => 'index.php',
+    'About'     => 'about.php',
+    'Academics' => 'academics.php',
+    'Students'  => 'students.php',
+    'Teachers'  => 'teachers.php',
+    'Gallery'   => 'gallery.php',
+    'News'      => 'news.php',
+    'Contact'   => 'contact.php'
 ];
-
-// Replace these placeholders with officially approved information.
-$leaders = [
-    ['Head Teacher Name', 'Head Teacher', 'images/headteacher.jpg'],
-    ['Deputy Head Name', 'Deputy Head, Academics', 'images/deputy-academic.jpg'],
-    ['Deputy Head Name', 'Deputy Head, Discipline', 'images/deputy-discipline.jpg'],
-];
-
-$values = [
-    'Discipline and responsibility',
-    'Respect and cooperation',
-    'Academic excellence',
-    'Integrity and honesty',
-    'Hard work and commitment',
-    'Service to the community',
-];
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title><?= e($school['name']) ?> | About Us</title>
-
-<meta name="description"
-      content="Discover the history, mission, leadership and educational journey of GS Kigeme-A in Nyamagabe District, Rwanda.">
-
-<meta name="theme-color" content="#104d2c">
-
-<link rel="icon" href="<?= e($school['logo']) ?>">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet">
-
-<style>
-
-/* ================================================================
-   1. GLOBAL DESIGN
-================================================================ */
-
-:root {
-    --green: #176b3a;
-    --dark: #104d2c;
-    --deep: #082e19;
-    --gold: #e0b32e;
-
-    --light-green: #edf7ef;
-    --pale: #f7faf7;
-
-    --text: #24352b;
-    --gray: #59685e;
-    --line: #e1e9e3;
-    --white: #ffffff;
-
-    --shadow: 0 10px 30px rgba(10, 50, 25, .09);
-    --shadow-hover: 0 18px 40px rgba(10, 50, 25, .15);
-
-    --serif: 'Playfair Display', Georgia, serif;
-    --sans: 'Inter', Arial, sans-serif;
-
-    --radius: 14px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 110px;
-}
-
-body {
-    font-family: var(--sans);
-    color: var(--text);
-    line-height: 1.75;
-    background: var(--white);
-    overflow-x: hidden;
-}
-
-body,
-button,
-a {
-    -webkit-tap-highlight-color: transparent;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-img {
-    display: block;
-    max-width: 100%;
-}
-
-button {
-    font: inherit;
-}
-
-h1,
-h2,
-h3 {
-    font-family: var(--serif);
-    line-height: 1.3;
-}
-
-.container {
-    width: min(90%, 1200px);
-    margin: auto;
-}
-
-::selection {
-    background: var(--gold);
-    color: var(--deep);
-}
-
-/* Accessibility focus */
-
-:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 4px;
-}
-
-/* Skip navigation */
-
-.skip {
-    position: fixed;
-    top: -100px;
-    left: 15px;
-    z-index: 3000;
-
-    background: var(--gold);
-    color: var(--deep);
-
-    padding: 12px 18px;
-    border-radius: 8px;
-    font-weight: 800;
-}
-
-.skip:focus {
-    top: 15px;
-}
-
-/* ================================================================
-   2. INFORMATION BAR
-================================================================ */
-
-.infobar {
-    background: var(--deep);
-    color: #e0eee4;
-
-    padding: 9px 5%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-
-    flex-wrap: wrap;
-    font-size: 12px;
-}
-
-.infobar a {
-    color: #fff;
-    transition: color .2s;
-}
-
-.infobar a:hover {
-    color: var(--gold);
-}
-
-/* ================================================================
-   3. NAVIGATION
-================================================================ */
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    background: rgba(255, 255, 255, .97);
-    backdrop-filter: blur(12px);
-
-    min-height: 82px;
-    padding: 10px 5%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-
-    box-shadow: 0 3px 18px rgba(0,0,0,.07);
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
-}
-
-.brand img {
-    width: 54px;
-    height: 54px;
-    object-fit: contain;
-}
-
-.brand strong {
-    display: block;
-    font-family: var(--serif);
-    color: var(--green);
-    font-size: 20px;
-    line-height: 1.3;
-}
-
-.brand small {
-    display: block;
-    font-size: 11px;
-    color: var(--gray);
-}
-
-nav ul {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    list-style: none;
-}
-
-nav a {
-    display: block;
-    padding: 9px 11px;
-    border-radius: 7px;
-
-    color: var(--text);
-    font-size: 13px;
-    font-weight: 700;
-
-    transition: background .2s, color .2s;
-}
-
-nav a:hover,
-nav a.active {
-    background: var(--light-green);
-    color: var(--green);
-}
-
-nav a.active {
-    box-shadow: inset 0 -3px 0 var(--gold);
-}
-
-nav a.apply {
-    background: var(--green);
-    color: #fff;
-    margin-left: 7px;
-    padding: 10px 16px;
-}
-
-nav a.apply:hover {
-    background: var(--dark);
-}
-
-.menu-toggle {
-    display: none;
-
-    border: 0;
-    border-radius: 8px;
-
-    padding: 10px 15px;
-
-    background: var(--green);
-    color: #fff;
-
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.menu-toggle:hover {
-    background: var(--dark);
-}
-
-/* ================================================================
-   4. HERO SECTION
-================================================================ */
-
-.about-hero {
-    min-height: 440px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 75px 8%;
-
-    position: relative;
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            100deg,
-            rgba(5, 40, 20, .94),
-            rgba(5, 40, 20, .58)
-        ),
-        url("images/OVERVIEW.jpg") center/cover no-repeat,
-        var(--dark);
-
-    color: #fff;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 760px;
-    animation: rise .8s ease both;
-}
-
-.breadcrumb {
-    color: #dcebe0;
-    font-size: 13px;
-    margin-bottom: 20px;
-}
-
-.breadcrumb a {
-    color: var(--gold);
-}
-
-.hero-tag {
-    display: inline-block;
-
-    background: var(--gold);
-    color: var(--deep);
-
-    padding: 7px 17px;
-    border-radius: 30px;
-
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-
-    margin-bottom: 20px;
-}
-
-.about-hero h1 {
-    font-size: clamp(38px, 6vw, 65px);
-    line-height: 1.12;
-    margin-bottom: 22px;
-}
-
-.about-hero h1 span {
-    color: var(--gold);
-}
-
-.about-hero p {
-    color: #edf7ef;
-    font-size: 16px;
-    max-width: 650px;
-}
-
-/* ================================================================
-   5. MAIN CONTENT LAYOUT
-================================================================ */
-
-.about-layout {
-    display: grid;
-    grid-template-columns: 245px minmax(0, 1fr);
-    gap: 45px;
-
-    padding-top: 75px;
-    padding-bottom: 70px;
-}
-
-/* ================================================================
-   6. SIDE NAVIGATION
-================================================================ */
-
-.side-menu {
-    position: sticky;
-    top: 110px;
-    align-self: start;
-
-    padding: 24px;
-
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-
-    box-shadow: var(--shadow);
-}
-
-.side-menu h3 {
-    font-size: 19px;
-    color: var(--dark);
-    margin-bottom: 17px;
-}
-
-.side-menu ul {
-    list-style: none;
-}
-
-.side-menu li {
-    margin-bottom: 7px;
-}
-
-.side-menu a {
-    display: block;
-
-    padding: 10px 12px;
-
-    color: var(--gray);
-    font-size: 13px;
-    font-weight: 700;
-
-    border-left: 3px solid transparent;
-    border-radius: 6px;
-
-    transition: .2s;
-}
-
-.side-menu a:hover,
-.side-menu a.active {
-    background: var(--light-green);
-    color: var(--green);
-    border-left-color: var(--gold);
-}
-
-/* ================================================================
-   7. CONTENT SECTIONS
-================================================================ */
-
-.about-content {
-    min-width: 0;
-}
-
-.about-content section {
-    padding-bottom: 70px;
-    scroll-margin-top: 110px;
-}
-
-.section-title {
-    position: relative;
-
-    color: var(--dark);
-    font-size: clamp(27px, 3vw, 37px);
-
-    margin-bottom: 20px;
-    padding-bottom: 13px;
-}
-
-.section-title::after {
-    content: "";
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    width: 65px;
-    height: 4px;
-
-    background: var(--gold);
-    border-radius: 10px;
-}
-
-.section-description {
-    max-width: 750px;
-    color: var(--gray);
-    margin-bottom: 23px;
-}
-
-.about-content p {
-    color: var(--gray);
-    margin-bottom: 16px;
-}
-
-/* ================================================================
-   8. SCHOOL PHOTO
-================================================================ */
-
-.school-photo {
-    position: relative;
-
-    width: 100%;
-    height: 370px;
-
-    overflow: hidden;
-    border-radius: var(--radius);
-
-    margin-top: 28px;
-
-    background: var(--light-green);
-    box-shadow: var(--shadow);
-}
-
-.school-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
-    transition: transform .6s;
-}
-
-.school-photo:hover img {
-    transform: scale(1.045);
-}
-
-.image-fallback {
-    display: none;
-
-    height: 100%;
-    min-height: 120px;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    background: var(--light-green);
-    color: var(--green);
-
-    text-align: center;
-    font-weight: 700;
-}
-
-/* ================================================================
-   9. MISSION, VISION AND VALUES
-================================================================ */
-
-.mvv-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-
-    margin-top: 28px;
-}
-
-.mvv-card {
-    padding: 27px 22px;
-
-    border-radius: var(--radius);
-    background: #fff;
-
-    box-shadow: var(--shadow);
-    border: 1px solid var(--line);
-    border-bottom: 4px solid var(--green);
-
-    transition: transform .3s, box-shadow .3s;
-}
-
-.mvv-card:nth-child(2) {
-    border-bottom-color: var(--gold);
-}
-
-.mvv-card:nth-child(3) {
-    border-bottom-color: var(--dark);
-}
-
-.mvv-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-}
-
-.mvv-icon {
-    width: 55px;
-    height: 55px;
-
-    display: grid;
-    place-items: center;
-
-    background: var(--light-green);
-    border-radius: 12px;
-
-    font-size: 27px;
-    margin-bottom: 16px;
-}
-
-.mvv-card h3 {
-    color: var(--green);
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
-.mvv-card p {
-    font-size: 13px;
-}
-
-.values-list {
-    padding-left: 18px;
-}
-
-.values-list li {
-    color: var(--gray);
-    font-size: 13px;
-    margin-bottom: 7px;
-}
-
-/* ================================================================
-   10. HISTORY TIMELINE
-================================================================ */
-
-.timeline {
-    list-style: none;
-
-    border-left: 3px solid var(--line);
-    margin: 30px 0 0 12px;
-}
-
-.timeline li {
-    position: relative;
-    padding: 0 0 32px 30px;
-}
-
-.timeline li::before {
-    content: "";
-
-    position: absolute;
-    left: -10px;
-    top: 6px;
-
-    width: 17px;
-    height: 17px;
-
-    background: var(--gold);
-    border: 3px solid #fff;
-    border-radius: 50%;
-
-    box-shadow: 0 0 0 2px var(--gold);
-}
-
-.timeline strong {
-    color: var(--green);
-    font-family: var(--serif);
-    font-size: 26px;
-}
-
-.timeline h3 {
-    color: var(--dark);
-    font-size: 19px;
-    margin: 4px 0;
-}
-
-.timeline p {
-    font-size: 14px;
-}
-
-/* ================================================================
-   11. LEADERSHIP
-================================================================ */
-
-.people-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-
-    margin-top: 28px;
-}
-
-.person-card {
-    background: #fff;
-
-    padding: 27px 18px;
-    border-radius: var(--radius);
-
-    text-align: center;
-
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow);
-
-    transition: transform .3s, box-shadow .3s;
-}
-
-.person-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-hover);
-}
-
-.person-card img,
-.person-placeholder {
-    width: 120px;
-    height: 120px;
-
-    border-radius: 50%;
-
-    margin: 0 auto 17px;
-
-    border: 4px solid var(--light-green);
-}
-
-.person-card img {
-    object-fit: cover;
-}
-
-.person-placeholder {
-    display: grid;
-    place-items: center;
-
-    background: var(--green);
-    color: var(--gold);
-
-    font-size: 40px;
-    font-weight: 800;
-}
-
-.person-card h3 {
-    color: var(--green);
-    font-size: 17px;
-}
-
-.person-card p {
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-/* ================================================================
-   12. LOCATION
-================================================================ */
-
-.location-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
-
-    margin-top: 28px;
-}
-
-.location-details {
-    padding: 28px;
-    background: var(--light-green);
-    border-radius: var(--radius);
-}
-
-.location-details h3 {
-    color: var(--dark);
-    font-size: 22px;
-    margin-bottom: 20px;
-}
-
-.location-details dl {
-    display: grid;
-    grid-template-columns: 105px minmax(0, 1fr);
-    gap: 12px;
-}
-
-.location-details dt {
-    color: var(--green);
-    font-weight: 800;
-    font-size: 13px;
-}
-
-.location-details dd {
-    color: var(--gray);
-    font-size: 13px;
-}
-
-.location-map {
-    background: linear-gradient(145deg, var(--green), var(--deep));
-
-    padding: 32px;
-    border-radius: var(--radius);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 15px;
-
-    color: #fff;
-}
-
-.location-map h3 {
-    color: var(--gold);
-    font-size: 25px;
-}
-
-.location-map p {
-    color: #edf7ef;
-}
-
-.button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: fit-content;
-
-    padding: 12px 21px;
-
-    background: var(--gold);
-    color: var(--deep);
-
-    border-radius: 7px;
-    font-weight: 800;
-    font-size: 13px;
-
-    transition: transform .2s, background .2s;
-}
-
-.button:hover {
-    background: #f0c94d;
-    transform: translateY(-3px);
-}
-
-/* ================================================================
-   13. CALL TO ACTION
-================================================================ */
-
-.about-cta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    gap: 22px;
-
-    padding: 38px;
-
-    background: linear-gradient(110deg, var(--green), var(--deep));
-    border-radius: var(--radius);
-
-    margin-bottom: 40px;
-    color: #fff;
-}
-
-.about-cta h2 {
-    font-size: 25px;
-}
-
-.about-cta p {
-    color: #e1eee5;
-    font-size: 14px;
-    margin-top: 7px;
-}
-
-/* ================================================================
-   14. FOOTER
-================================================================ */
-
-footer {
-    background: var(--deep);
-    color: #d7e8dc;
-
-    padding: 55px 7% 22px;
-    font-size: 13px;
-}
-
-.fgrid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 35px;
-
-    margin-bottom: 35px;
-}
-
-footer h3 {
-    color: var(--gold);
-    font-size: 17px;
-    margin-bottom: 15px;
-}
-
-footer p {
-    margin-bottom: 10px;
-}
-
-footer ul {
-    list-style: none;
-}
-
-footer li {
-    margin-bottom: 9px;
-}
-
-footer a {
-    transition: color .2s;
-}
-
-footer a:hover {
-    color: var(--gold);
-}
-
-.copy {
-    border-top: 1px solid rgba(255,255,255,.17);
-    padding-top: 20px;
-    text-align: center;
-}
-
-/* ================================================================
-   15. BACK TO TOP
-================================================================ */
-
-.top {
-    position: fixed;
-    right: 22px;
-    bottom: 22px;
-    z-index: 900;
-
-    width: 48px;
-    height: 48px;
-
-    display: grid;
-    place-items: center;
-
-    border: none;
-    border-radius: 50%;
-
-    background: var(--green);
-    color: #fff;
-
-    font-size: 22px;
-    font-weight: bold;
-
-    cursor: pointer;
-    box-shadow: var(--shadow);
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-
-    transition: .25s;
-}
-
-.top.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.top:hover {
-    background: var(--gold);
-    color: var(--deep);
-}
-
-/* ================================================================
-   16. SCROLL ANIMATIONS
-================================================================ */
-
-.reveal {
-    opacity: 0;
-    transform: translateY(25px);
-    transition: opacity .7s ease, transform .7s ease;
-}
-
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-@keyframes rise {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ================================================================
-   17. TABLET AND MOBILE
-================================================================ */
-
-@media(max-width:1100px) {
-
-    .menu-toggle {
-        display: block;
-    }
-
-    header {
-        position: sticky;
-    }
-
-    nav {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-
-        display: none;
-
-        padding: 15px 5% 22px;
-
-        background: #fff;
-        box-shadow: 0 12px 22px rgba(0,0,0,.1);
-    }
-
-    nav.open {
-        display: block;
-    }
-
-    nav ul {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    nav a {
-        padding: 12px;
-    }
-
-    nav a.active {
-        box-shadow: inset 4px 0 0 var(--gold);
-    }
-
-    nav a.apply {
-        margin: 8px 0 0;
-        text-align: center;
-    }
-
-    .about-layout {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .side-menu {
-        position: static;
-    }
-
-    .side-menu ul {
-        display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        padding-bottom: 8px;
-    }
-
-    .side-menu li {
-        flex-shrink: 0;
-    }
-
-    .side-menu a {
-        white-space: nowrap;
-        border: 1px solid var(--line);
-        border-radius: 25px;
-    }
-
-    .side-menu a.active {
-        border-color: var(--green);
-    }
-
-}
-
-@media(max-width:750px) {
-
-    .container {
-        width: 92%;
-    }
-
-    .infobar {
-        justify-content: center;
-        text-align: center;
-        font-size: 11px;
-    }
-
-    header {
-        padding: 10px 4%;
-    }
-
-    .brand img {
-        width: 43px;
-        height: 43px;
-    }
-
-    .brand strong {
-        font-size: 16px;
-    }
-
-    .brand small {
-        font-size: 9px;
-    }
-
-    .about-hero {
-        min-height: 380px;
-        padding: 55px 6%;
-    }
-
-    .about-hero p {
-        font-size: 14px;
-    }
-
-    .mvv-grid,
-    .people-grid,
-    .location-grid,
-    .fgrid {
-        grid-template-columns: 1fr;
-    }
-
-    .school-photo {
-        height: 260px;
-    }
-
-    .about-layout {
-        padding-top: 40px;
-        padding-bottom: 40px;
-    }
-
-    .about-content section {
-        padding-bottom: 45px;
-    }
-
-    .about-cta {
-        padding: 25px;
-    }
-
-    .about-cta h2 {
-        font-size: 21px;
-    }
-
-    footer {
-        padding: 40px 6% 20px;
-    }
-
-}
-
-@media(max-width:420px) {
-
-    .brand {
-        gap: 7px;
-    }
-
-    .brand strong {
-        font-size: 14px;
-    }
-
-    .menu-toggle {
-        padding: 9px 11px;
-        font-size: 12px;
-    }
-
-    .location-details {
-        padding: 20px;
-    }
-
-    .location-details dl {
-        grid-template-columns: 85px minmax(0, 1fr);
-    }
-
-}
-
-/* ================================================================
-   18. ACCESSIBILITY: REDUCED MOTION
-================================================================ */
-
-@media(prefers-reduced-motion: reduce) {
-
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-    }
-
-    .reveal {
-        opacity: 1;
-        transform: none;
-    }
-
-}
-
-@media print {
-
-    header,
-    .infobar,
-    .side-menu,
-    .top,
-    .about-cta,
-    footer,
-    .menu-toggle {
-        display: none !important;
-    }
-
-    body {
-        color: #000;
-        background: #fff;
-    }
-
-    .about-layout {
-        display: block;
-        padding: 20px 0;
-    }
-
-    .about-hero {
-        min-height: auto;
-        color: #000;
-        background: #fff;
-        padding: 20px 0;
-    }
-
-    .about-hero p,
-    .about-hero h1,
-    .about-hero h1 span {
-        color: #000;
-    }
-
-    .reveal {
-        opacity: 1;
-        transform: none;
-    }
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap 5.3 and Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+
+    <title>About GS KIGEME A | Learning Today, Leading Tomorrow</title>
+
+    <meta name="description"
+          content="Learn about GS KIGEME A, an Anglican Church secondary school in Kigeme, Nyamagabe District, Rwanda.">
+
+    <style>
+        :root {
+            --green: #238653;
+            --green-deep: #145b38;
+            --dark-green: #0b3d27;
+            --light-green: #effaf3;
+            --mint: #d9f2e2;
+            --gold: #e0b32e;
+            --white: #ffffff;
+            --text: #26352c;
+            --gray: #66736a;
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 110px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            background: linear-gradient(180deg, #ffffff 0%, #fbfefc 100%);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* SMOOTH GREEN NAVIGATION BAR */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            padding: 11px 5.5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            background: rgba(255, 255, 255, .96);
+            border-bottom: 1px solid rgba(35, 134, 83, .12);
+            box-shadow: 0 7px 25px rgba(11, 61, 39, .09);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .school-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .school-brand img {
+            width: 62px;
+            height: 62px;
+            object-fit: contain;
+            border-radius: 14px;
+            padding: 4px;
+            background: var(--light-green);
+        }
+
+        .school-brand h2 {
+            color: var(--dark-green);
+            font-size: 21px;
+            line-height: 1.25;
+            letter-spacing: .3px;
+        }
+
+        .school-brand p {
+            font-size: 11px;
+            color: var(--gray);
+            letter-spacing: .35px;
+        }
+
+        .nav-toggle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 45px;
+            height: 42px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+            border-radius: 12px;
+            background: var(--light-green);
+            border: 1px solid rgba(35, 134, 83, .18);
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 21px;
+            height: 2px;
+            border-radius: 5px;
+            background: var(--dark-green);
+            transition: transform .25s ease, opacity .25s ease;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+
+        .main-nav a {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: #355343;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: color .25s ease, background .25s ease, transform .25s ease;
+        }
+
+        .main-nav a:not(.apply-button):hover,
+        .main-nav a.active {
+            color: var(--green-deep);
+            background: var(--light-green);
+        }
+
+        .main-nav a:not(.apply-button)::after {
+            content: "";
+            position: absolute;
+            left: 13px;
+            right: 13px;
+            bottom: 5px;
+            height: 2px;
+            border-radius: 5px;
+            background: var(--green);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform .25s ease;
+        }
+
+        .main-nav a:not(.apply-button):hover::after,
+        .main-nav a.active::after {
+            transform: scaleX(1);
+        }
+
+        .main-nav .apply-button {
+            margin-left: 5px;
+            padding: 11px 17px;
+            color: #fff;
+            background: linear-gradient(135deg, #2a9b60, #145b38);
+            border: 1px solid rgba(255,255,255,.25);
+            border-radius: 11px;
+            box-shadow: 0 5px 14px rgba(20, 91, 56, .2);
+        }
+
+        .main-nav .apply-button:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(20, 91, 56, .27);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 570px;
+            display: flex;
+            align-items: center;
+            padding: 80px 8%;
+            background:
+                linear-gradient(90deg,
+                rgba(5, 45, 23, 0.90),
+                rgba(5, 45, 23, 0.43)),
+                url("images/OVERVIEW.jpg") center/cover no-repeat;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 720px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: var(--gold);
+            color: #202820;
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 62px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 620px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 23px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 5px 8px 5px 0;
+            transition: 0.3s;
+        }
+
+        .button-gold {
+            background: var(--gold);
+            color: #17251b;
+        }
+
+        .button-white {
+            border: 2px solid white;
+            color: white;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        /* GENERAL SECTIONS */
+        section {
+            padding: 75px 8%;
+            scroll-margin-top: 95px;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 40px;
+        }
+
+        .section-heading .small-title {
+            color: var(--green);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 13px;
+        }
+
+        .section-heading h2 {
+            color: var(--dark-green);
+            font-size: clamp(27px, 4vw, 38px);
+            line-height: 1.3;
+            margin: 10px 0 15px;
+        }
+
+        .section-heading p {
+            color: var(--gray);
+        }
+
+        /* HIGHLIGHTS */
+        .highlights {
+            padding-top: 0;
+            position: relative;
+            margin-top: -35px;
+            z-index: 2;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .highlight-card {
+            background: white;
+            padding: 27px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .highlight-card .icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .highlight-card h3 {
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+
+        .highlight-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 390px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-text h2 {
+            color: var(--dark-green);
+            font-size: 34px;
+            line-height: 1.3;
+            margin: 12px 0 20px;
+        }
+
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .check-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .check-list li {
+            margin-bottom: 10px;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            color: var(--green);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* ACADEMICS */
+        .academics {
+            background: var(--light-green);
+        }
+
+        .academic-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .academic-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            border-bottom: 4px solid var(--green);
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+
+        .academic-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .academic-card .icon {
+            font-size: 34px;
+        }
+
+        .academic-card h3 {
+            color: var(--green);
+            margin: 12px 0;
+        }
+
+        .academic-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .combination-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .combination-list span {
+            background: var(--light-green);
+            color: var(--dark-green);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* STUDENT LIFE */
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .student-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .student-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .student-card div {
+            padding: 22px;
+        }
+
+        .student-card h3 {
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+
+        .student-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* MOTTO BANNER */
+        .motto {
+            text-align: center;
+            background: var(--dark-green);
+            color: white;
+            padding: 55px 8%;
+        }
+
+        .motto h2 {
+            font-size: clamp(25px, 4vw, 38px);
+            margin-bottom: 12px;
+        }
+
+        .motto h2 span {
+            color: var(--gold);
+        }
+
+        .motto p {
+            color: #e1eee5;
+        }
+
+        /* GALLERY */
+        .gallery {
+            background: #fafcfb;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.03);
+        }
+
+        /* NEWS */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .news-card {
+            padding: 25px;
+            background: white;
+            border: 1px solid #e5ece7;
+            border-radius: 10px;
+        }
+
+        .news-card h3 {
+            color: var(--green);
+            margin-bottom: 10px;
+        }
+
+        .news-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .news-note {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* ADMISSION BANNER */
+        .admission-banner {
+            background: var(--light-green);
+            text-align: center;
+        }
+
+        .admission-banner h2 {
+            color: var(--dark-green);
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .admission-banner p {
+            color: var(--gray);
+            max-width: 650px;
+            margin: 0 auto 22px;
+        }
+
+        /* CONTACT */
+        .contact {
+            background: var(--dark-green);
+            color: white;
+        }
+
+        .contact .section-heading h2 {
+            color: white;
+        }
+
+        .contact .section-heading p {
+            color: #d7e8dc;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .contact-card p,
+        .contact-card a {
+            color: white;
+            overflow-wrap: anywhere;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #082e19;
+            color: #d7e8dc;
+            padding: 22px 8%;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: var(--gold);
+        }
+
+
+        /* SOCIAL MEDIA */
+        .social-media {
+            padding: 30px 15px 10px;
+            text-align: center;
+        }
+
+        .social-media h3 {
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-size: 19px;
+        }
+
+        .social-media p {
+            color: #d7e8dc;
+            margin-bottom: 16px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            transition: .25s ease;
+        }
+
+        .social-btn:hover {
+            color: #fff;
+            transform: translateY(-4px);
+            filter: brightness(1.08);
+        }
+
+        .social-btn.whatsapp { background: #25D366; }
+        .social-btn.instagram { background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #4f5bd5); }
+        .social-btn.facebook { background: #1877F2; }
+        .social-btn.youtube { background: #FF0000; }
+
+        .whatsapp-float {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 2000;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #25D366;
+            color: #fff;
+            font-size: 13px;
+            font-weight: bold;
+            box-shadow: 0 5px 18px rgba(0,0,0,.25);
+            transition: .25s ease;
+        }
+
+        .whatsapp-float:hover {
+            color: #fff;
+            transform: scale(1.08);
+        }
+
+
+
+        .reveal-ready {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .65s ease, transform .65s ease;
+        }
+        .reveal-ready.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-ready {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        /* BOOTSTRAP-ENHANCED SOCIAL ICON BUTTONS */
+        .social-btn {
+            gap: 9px;
+            min-width: 132px;
+            padding: 11px 19px;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, .16);
+            letter-spacing: .2px;
+        }
+
+        .social-btn i {
+            font-size: 19px;
+            line-height: 1;
+        }
+
+        .social-btn:focus-visible,
+        .whatsapp-float:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 4px;
+        }
+
+        .whatsapp-float i {
+            font-size: 29px;
+        }
+
+        /* Smooth reveal animation for page content */
+        .highlight-card, .academic-card, .student-card, .news-card,
+        .contact-card, .gallery-grid img {
+            will-change: transform;
+        }
+
+        .button, .social-btn, .main-nav a, .menu-toggle {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media (max-width: 480px) {
+            .social-links { gap: 9px; }
+            .social-btn { min-width: 118px; padding: 10px 13px; font-size: 13px; }
+            .social-btn i { font-size: 17px; }
+        }
+
+        /* TABLET AND MOBILE NAVIGATION */
+        @media (max-width: 1100px) {
+            .site-header { padding-left: 4%; padding-right: 4%; gap: 12px; }
+            .main-nav { gap: 1px; }
+            .main-nav a { padding: 9px 8px; font-size: 12px; }
+        }
+
+        @media (max-width: 900px) {
+            .site-header { min-height: 82px; }
+            .menu-toggle { display: flex; margin-left: auto; }
+            .main-nav {
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 4%;
+                right: 4%;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 5px;
+                padding: 12px;
+                border: 1px solid rgba(35, 134, 83, .15);
+                border-radius: 16px;
+                background: rgba(255,255,255,.98);
+                box-shadow: 0 15px 35px rgba(11,61,39,.16);
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transform: translateY(-8px);
+                transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+            }
+            .main-nav a { justify-content: center; width: 100%; padding: 12px; font-size: 14px; }
+            .main-nav .apply-button { margin: 4px 0 0; }
+            .nav-toggle:checked ~ .main-nav {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+            .nav-toggle:checked + .menu-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-toggle:checked + .menu-toggle span:nth-child(2) { opacity: 0; }
+            .nav-toggle:checked + .menu-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            .academic-grid, .news-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 700px) {
+            .hero { min-height: 500px; padding: 60px 6%; }
+            section { padding: 55px 6%; }
+            .highlight-grid, .about-grid, .academic-grid, .student-grid,
+            .news-grid, .contact-grid { grid-template-columns: 1fr; }
+            .about-image img { height: 280px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid img { height: 160px; }
+            .school-brand img { width: 53px; height: 53px; }
+            .school-brand h2 { font-size: 18px; }
+            .school-brand p { font-size: 10px; }
+            .whatsapp-float { right: 15px; bottom: 15px; }
+        }
+
+        /* Subtle transitions and accessibility */
+        .highlight-card, .academic-card, .student-card, .news-card,
+        .contact-card, .about-image img, .gallery-grid img {
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+
+        .highlight-card:hover, .news-card:hover, .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 32px rgba(11, 61, 39, .12);
+        }
+
+        :focus-visible {
+            outline: 3px solid #e0b32e;
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<a class="skip" href="#main">
-    Skip to main content
-</a>
-
-<!-- ============================================================
-     INFORMATION BAR
-============================================================ -->
-
-<div class="infobar">
-
-    <span>
-        📍 <?= e($school['location']) ?>
-    </span>
-
-    <span>
-
-        <a href="tel:<?= e($school['phone']) ?>">
-            📞 <?= e($school['phone']) ?>
+    <!-- STICKY GREEN NAVIGATION -->
+    <header class="site-header">
+        <a class="school-brand" href="index.php" aria-label="GS Kigeme A home">
+            <img src="images/gs logo.jpg" alt="GS KIGEME A School Logo">
+            <span>
+                <h2>GS KIGEME A</h2>
+                <p>Learning Today, Leading Tomorrow</p>
+            </span>
         </a>
 
-        &nbsp; | &nbsp;
+        <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
+        <label class="menu-toggle" for="nav-toggle" aria-label="Open navigation menu">
+            <span></span><span></span><span></span>
+        </label>
 
-        <a href="mailto:<?= e($school['email']) ?>">
-            ✉️ <?= e($school['email']) ?>
-        </a>
-
-    </span>
-
-</div>
-
-
-<!-- ============================================================
-     MAIN NAVIGATION
-============================================================ -->
-
-<header>
-
-    <a class="brand"
-       href="index.php"
-       aria-label="<?= e($school['name']) ?> home">
-
-        <img
-            src="<?= e($school['logo']) ?>"
-            alt="<?= e($school['name']) ?> logo"
-            onerror="this.style.display='none'"
-        >
-
-        <span>
-
-            <strong><?= e($school['name']) ?></strong>
-
-            <small><?= e($school['motto']) ?></small>
-
-        </span>
-
-    </a>
-
-
-    <button
-        class="menu-toggle"
-        id="menuToggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="mainNav"
-        aria-label="Open navigation menu"
-    >
-        ☰ Menu
-    </button>
-
-
-    <nav id="mainNav" aria-label="Main navigation">
-
-        <ul>
-
-            <?php foreach ($nav as $file => $label): ?>
-
-                <li>
-
-                    <a
-                        href="<?= e($file) ?>"
-                        <?= $file === $currentPage
-                            ? 'class="active" aria-current="page"'
-                            : '' ?>
-                    >
-                        <?= e($label) ?>
-                    </a>
-
-                </li>
-
+        <nav class="main-nav" aria-label="Main navigation">
+            <?php foreach ($navigation as $label => $url): ?>
+                <a href="<?php echo e($url); ?>" class="<?php echo $currentPage === $url ? 'active' : ''; ?>"
+                   <?php echo $currentPage === $url ? 'aria-current="page"' : ''; ?>>
+                    <?php echo e($label); ?>
+                </a>
             <?php endforeach; ?>
+            <a href="admission/index.php" class="apply-button">Apply Now</a>
+        </nav>
+    </header>
 
-            <li>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">WELCOME TO OUR SCHOOL</span>
 
-                <a href="admission/index.php" class="apply">
-                    Apply now
-                </a>
-
-            </li>
-
-        </ul>
-
-    </nav>
-
-</header>
-
-
-<main id="main">
-
-<!-- ============================================================
-     HERO SECTION
-============================================================ -->
-
-<section class="about-hero">
-
-    <div class="hero-content">
-
-        <div class="breadcrumb">
-
-            <a href="index.php">Home</a> / About Us
-
-        </div>
-
-        <span class="hero-tag">
-            DISCOVER OUR SCHOOL
-        </span>
-
-        <h1>
-            Discover the Story of
-            <span>GS Kigeme A</span>
-        </h1>
-
-        <p>
-            Education, discipline, knowledge and character development.
-            Discover our history, mission, leadership and the values
-            that guide our school community.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- ============================================================
-     MAIN CONTENT
-============================================================ -->
-
-<div class="container about-layout">
-
-
-<!-- SIDE NAVIGATION -->
-
-<aside class="side-menu" aria-label="About page sections">
-
-    <h3>Explore About Us</h3>
-
-    <ul id="sideMenu">
-
-        <?php foreach ($sections as $id => $title): ?>
-
-            <li>
-
-                <a href="#<?= e($id) ?>">
-                    <?= e($title) ?>
-                </a>
-
-            </li>
-
-        <?php endforeach; ?>
-
-    </ul>
-
-</aside>
-
-
-<!-- ABOUT CONTENT -->
-
-<article class="about-content">
-
-
-<!-- ============================================================
-     WHO WE ARE
-============================================================ -->
-
-<section id="who" class="reveal">
-
-    <h2 class="section-title">
-        Who We Are
-    </h2>
-
-    <p>
-        GS Kigeme A is an Anglican Church secondary school managed
-        by the Anglican Church of Rwanda through Kigeme Diocese,
-        in collaboration with the Government of Rwanda.
-    </p>
-
-    <p>
-        The school is located in Kigeme Cell, Gasaka Sector,
-        Nyamagabe District, Southern Province of Rwanda.
-        Since its establishment in 1965, the institution has
-        continued contributing to education and the development
-        of responsible members of society.
-    </p>
-
-    <p>
-        Our school is committed to providing an environment where
-        learners develop academic knowledge, discipline,
-        responsibility, practical skills and positive values.
-    </p>
-
-    <div class="school-photo">
-
-        <img
-            src="images/OVERVIEW.jpg"
-            alt="Overview of GS Kigeme A"
-            loading="lazy"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-        >
-
-        <div class="image-fallback">
-            School overview image is not available.
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ============================================================
-     MISSION AND VALUES
-============================================================ -->
-
-<section id="values" class="reveal">
-
-    <h2 class="section-title">
-        Our Mission and Values
-    </h2>
-
-    <p class="section-description">
-        Our educational approach focuses on academic development,
-        good character, responsibility and preparation for the future.
-    </p>
-
-    <div class="mvv-grid">
-
-        <div class="mvv-card">
-
-            <div class="mvv-icon" aria-hidden="true">🎯</div>
-
-            <h3>Our Mission</h3>
+            <h1>
+                Welcome to <span>GS KIGEME A</span>
+            </h1>
 
             <p>
-                To provide quality education that develops learners'
-                knowledge, skills, discipline and responsibility,
-                enabling them to contribute positively to society.
+                We are committed to supporting learners through education,
+                discipline, knowledge, skills and personal development.
+                Together, we prepare students for a brighter future.
             </p>
 
-        </div>
-
-
-        <div class="mvv-card">
-
-            <div class="mvv-icon" aria-hidden="true">🌍</div>
-
-            <h3>Our Vision</h3>
-
-            <p>
-                To be a school recognized for academic achievement,
-                strong moral values, discipline and the development
-                of responsible future leaders.
-            </p>
-
-        </div>
-
-
-        <div class="mvv-card">
-
-            <div class="mvv-icon" aria-hidden="true">⭐</div>
-
-            <h3>Our Values</h3>
-
-            <ul class="values-list">
-
-                <?php foreach ($values as $value): ?>
-
-                    <li><?= e($value) ?></li>
-
-                <?php endforeach; ?>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ============================================================
-     HISTORY
-============================================================ -->
-
-<section id="history" class="reveal">
-
-    <h2 class="section-title">
-        Our History
-    </h2>
-
-    <p class="section-description">
-        GS Kigeme A has a long educational journey.
-        Explore some of the important milestones in its development.
-    </p>
-
-    <ol class="timeline">
-
-        <?php foreach ($timeline as [$year, $title, $description]): ?>
-
-            <li>
-
-                <strong><?= e($year) ?></strong>
-
-                <h3><?= e($title) ?></h3>
-
-                <p><?= e($description) ?></p>
-
-            </li>
-
-        <?php endforeach; ?>
-
-    </ol>
-
-</section>
-
-
-<!-- ============================================================
-     LEADERSHIP
-============================================================ -->
-
-<section id="leadership" class="reveal">
-
-    <h2 class="section-title">
-        Our School Leadership
-    </h2>
-
-    <p class="section-description">
-        Effective school leadership supports teaching,
-        learning, discipline and the development of learners.
-    </p>
-
-    <div class="people-grid">
-
-        <?php foreach ($leaders as [$name, $role, $photo]): ?>
-
-            <div class="person-card">
-
-                <?php if (
-                    is_file(__DIR__ . '/' . $photo) &&
-                    is_readable(__DIR__ . '/' . $photo)
-                ): ?>
-
-                    <img
-                        src="<?= e($photo) ?>"
-                        alt="<?= e($name) ?> - <?= e($role) ?>"
-                        loading="lazy"
-                    >
-
-                <?php else: ?>
-
-                    <div class="person-placeholder" aria-hidden="true">
-                        <?= e(mb_substr($name, 0, 1, 'UTF-8')) ?>
-                    </div>
-
-                <?php endif; ?>
-
-                <h3><?= e($name) ?></h3>
-
-                <p><?= e($role) ?></p>
-
-            </div>
-
-        <?php endforeach; ?>
-
-    </div>
-
-</section>
-
-
-<!-- ============================================================
-     LOCATION
-============================================================ -->
-
-<section id="location" class="reveal">
-
-    <h2 class="section-title">
-        Where We Are Located
-    </h2>
-
-    <p class="section-description">
-        Visit GS Kigeme A and discover our educational environment
-        in the beautiful Southern Province of Rwanda.
-    </p>
-
-    <div class="location-grid">
-
-
-        <div class="location-details">
-
-            <h3>School Address</h3>
-
-            <dl>
-
-                <dt>Country</dt>
-                <dd>Rwanda</dd>
-
-                <dt>Province</dt>
-                <dd>Southern Province</dd>
-
-                <dt>District</dt>
-                <dd>Nyamagabe</dd>
-
-                <dt>Sector</dt>
-                <dd>Gasaka</dd>
-
-                <dt>Cell</dt>
-                <dd>Kigeme</dd>
-
-                <dt>School</dt>
-                <dd>GS Kigeme A</dd>
-
-            </dl>
-
-        </div>
-
-
-        <div class="location-map">
-
-            <h3>Visit Our School</h3>
-
-            <p>
-                Find GS Kigeme A in Nyamagabe District,
-                Southern Province, Rwanda.
-            </p>
-
-            <a
-                class="button"
-                href="https://www.google.com/maps/search/?api=1&query=GS+Kigeme+A+Nyamagabe+Rwanda"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Open Google Maps →
+            <a href="about.php" class="button button-gold">
+                Discover Our School
             </a>
 
+            <a href="admission/index.php" class="button button-white">
+                Apply for Admission
+            </a>
+        </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="highlights">
+        <div class="highlight-grid">
+
+            <div class="highlight-card">
+                <div class="icon">📚</div>
+                <h3>Quality Education</h3>
+                <p>Supporting learning, knowledge and academic growth.</p>
+            </div>
+
+            <div class="highlight-card">
+                <div class="icon">🎓</div>
+                <h3>Academic Development</h3>
+                <p>Helping learners build skills for future opportunities.</p>
+            </div>
+
+            <div class="highlight-card">
+                <div class="icon">🤝</div>
+                <h3>Discipline and Values</h3>
+                <p>Encouraging responsibility, respect and cooperation.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="about-grid">
+
+            <div class="about-image">
+                <img src="images/OVERVIEW.jpg"
+                     alt="Overview of GS KIGEME A"
+                     loading="lazy">
+            </div>
+
+            <div class="about-text">
+                <span class="small-title">ABOUT OUR SCHOOL</span>
+
+                <h2>Building Knowledge, Character and Opportunity</h2>
+
+                <p>
+                    GS KIGEME A is an Anglican Church secondary school managed
+                    by the Anglican Church of Rwanda through Kigeme Diocese,
+                    in collaboration with the Government of Rwanda. The school
+                    is located in Kigeme Cell, Gasaka Sector, Nyamagabe District,
+                    Southern Province, Rwanda.
+                </p>
+
+                <p>
+                    Our school is committed to supporting learners through
+                    education, discipline, knowledge, practical skills and
+                    personal development. We work with the school community
+                    to prepare students to contribute positively to society.
+                </p>
+
+                <ul class="check-list">
+                    <li>Encouraging academic achievement</li>
+                    <li>Promoting discipline and respect</li>
+                    <li>Supporting learner participation</li>
+                    <li>Preparing students for the future</li>
+                </ul>
+
+                <a href="#academics" class="button button-gold">
+                    Explore Our School
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ACADEMICS -->
+    <section class="academics" id="academics">
+        <div class="section-heading">
+            <span class="small-title">OUR ACADEMICS</span>
+            <h2>Learning for a Better Future</h2>
+            <p>
+                Discover the levels and subject combinations offered
+                at GS KIGEME A.
+            </p>
         </div>
 
-    </div>
+        <div class="academic-grid">
 
-</section>
+            <div class="academic-card">
+                <div class="icon">📖</div>
+                <h3>Ordinary Level</h3>
+                <p>
+                    Ordinary Level supports learners in developing
+                    foundational knowledge and skills across subjects.
+                </p>
+                <a href="academics.php" class="button button-gold">
+                    Explore Academics
+                </a>
+            </div>
 
+            <div class="academic-card">
+                <div class="icon">🔬</div>
+                <h3>Advanced Level</h3>
+                <p>
+                    Advanced Level gives learners opportunities to focus
+                    on subject combinations and prepare for further study.
+                </p>
 
-<!-- ============================================================
-     CALL TO ACTION
-============================================================ -->
+                <div class="combination-list">
+                    <span>MPC</span>
+                    <span>MCB</span>
+                    <span>PCB</span>
+                    <span>MS1</span>
+                    <span>MS2</span>
+                </div>
+            </div>
 
-<div class="about-cta reveal">
+            <div class="academic-card">
+                <div class="icon">🌟</div>
+                <h3>Skills and Development</h3>
+                <p>
+                    Learning is supported by developing responsibility,
+                    problem-solving, teamwork and independent thinking.
+                </p>
+                <a href="students.php" class="button button-gold">
+                    Student Life
+                </a>
+            </div>
 
-    <div>
+        </div>
+    </section>
 
-        <h2>Become Part of Our School Community</h2>
+    <!-- STUDENT LIFE -->
+    <section id="students">
+        <div class="section-heading">
+            <span class="small-title">STUDENT LIFE</span>
+            <h2>Learning Beyond the Classroom</h2>
+            <p>
+                School life can include academic activities, sports,
+                teamwork and opportunities to develop new skills.
+            </p>
+        </div>
 
+        <div class="student-grid">
+
+            <div class="student-card">
+                <img src="images/students.jpg"
+                     alt="Learners at school"
+                     loading="lazy">
+
+                <div>
+                    <h3>Learning Activities</h3>
+                    <p>
+                        Encourage curiosity, participation and a strong
+                        commitment to learning.
+                    </p>
+                </div>
+            </div>
+
+            <div class="student-card">
+                <img src="images/activities.jpg"
+                     alt="School activities"
+                     loading="lazy">
+
+                <div>
+                    <h3>School Activities</h3>
+                    <p>
+                        Activities can help learners build confidence,
+                        teamwork and communication skills.
+                    </p>
+                </div>
+            </div>
+
+            <div class="student-card">
+                <img src="images/sports.jpg"
+                     alt="School sports"
+                     loading="lazy">
+
+                <div>
+                    <h3>Sports and Teamwork</h3>
+                    <p>
+                        Sports encourage cooperation, determination
+                        and healthy competition.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SCHOOL MOTTO -->
+    <section class="motto">
+        <h2>Learning Today, <span>Leading Tomorrow</span></h2>
         <p>
-            Would you like to know more about GS Kigeme A?
-            We are ready to help you.
+            Knowledge opens doors. Discipline builds character.
+            Education helps shape the future.
+        </p>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+        <div class="section-heading">
+            <span class="small-title">OUR GALLERY</span>
+            <h2>A Glimpse of School Life</h2>
+            <p>
+                Explore photographs that represent our school,
+                learning environment and activities.
+            </p>
+        </div>
+
+        <div class="gallery-grid">
+            <img src="images/OVERVIEW.jpg"
+                 alt="School overview"
+                 loading="lazy">
+
+            <img src="images/students.jpg"
+                 alt="School learners"
+                 loading="lazy">
+
+            <img src="images/activities.jpg"
+                 alt="School activities"
+                 loading="lazy">
+
+            <img src="images/sports.jpg"
+                 alt="School sports"
+                 loading="lazy">
+        </div>
+
+        <div style="text-align:center; margin-top:30px;">
+            <a href="gallery.php" class="button button-gold">
+                View Full Gallery
+            </a>
+        </div>
+    </section>
+
+    <!-- NEWS AND UPDATES -->
+    <section id="news">
+        <div class="section-heading">
+            <span class="small-title">NEWS AND UPDATES</span>
+            <h2>What's Happening at Our School?</h2>
+            <p>
+                Visit the school news page for verified announcements,
+                academic updates and important information.
+            </p>
+        </div>
+
+        <div class="news-grid">
+
+            <div class="news-card">
+                <h3>Academic Announcements</h3>
+                <p>
+                    Check official school communications for information
+                    about learning activities, assessments and academic dates.
+                </p>
+            </div>
+
+            <div class="news-card">
+                <h3>School Activities</h3>
+                <p>
+                    Follow confirmed updates about school events,
+                    student activities and community participation.
+                </p>
+            </div>
+
+            <div class="news-card">
+                <h3>Important Notices</h3>
+                <p>
+                    Read official notices about school programmes,
+                    admission information and other announcements.
+                </p>
+            </div>
+
+        </div>
+
+        <p class="news-note">
+            Note: These are news categories, not reports of confirmed
+            recent events. Add verified school news before publishing.
         </p>
 
-    </div>
+        <div style="text-align:center; margin-top:25px;">
+            <a href="news.php" class="button button-gold">
+                Visit News Page
+            </a>
+        </div>
+    </section>
 
-    <a href="contact.php" class="button">
-        Contact Our School
-    </a>
+    <!-- ADMISSION -->
+    <section class="admission-banner">
+        <h2>Join the GS KIGEME A Community</h2>
 
-</div>
+        <p>
+            Interested in joining our school? Visit the admission portal
+            to find the application form and follow the instructions.
+        </p>
 
+        <a href="admission/index.php" class="button button-gold">
+            Apply for Admission
+        </a>
+    </section>
 
-</article>
-
-</div>
-
-</main>
-
-
-<!-- ============================================================
-     FOOTER
-============================================================ -->
-
-<footer>
-
-    <div class="fgrid">
-
-
-        <div>
-
-            <h3><?= e($school['name']) ?></h3>
-
-            <p><?= e($school['motto']) ?>.</p>
-
-            <p><?= e($school['location']) ?></p>
-
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="section-heading">
+            <span class="small-title">CONTACT US</span>
+            <h2>Get in Touch With Our School</h2>
+            <p>
+                Contact GS KIGEME A for school information and enquiries.
+            </p>
         </div>
 
+        <div class="contact-grid">
 
-        <div>
+            <div class="contact-card">
+                <h3>📍 Location</h3>
+                <p>Nyamagabe District, Rwanda</p>
+            </div>
 
-            <h3>Website Pages</h3>
+            <div class="contact-card">
+                <h3>📞 Phone</h3>
+                <p>
+                    <a href="tel:0788600587">0788600587</a>
+                </p>
+            </div>
 
-            <ul>
-
-                <?php foreach ($nav as $file => $label): ?>
-
-                    <li>
-
-                        <a href="<?= e($file) ?>">
-                            <?= e($label) ?>
-                        </a>
-
-                    </li>
-
-                <?php endforeach; ?>
-
-            </ul>
+            <div class="contact-card">
+                <h3>✉️ Email</h3>
+                <p>
+                    <a href="mailto:gskigeme2@yahoo.com">
+                        gskigeme2@yahoo.com
+                    </a>
+                </p>
+            </div>
 
         </div>
+    </section>
 
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            &copy; <?php echo e($currentYear); ?> GS KIGEME A.
+            All rights reserved.
+        </p>
 
-        <div>
+        <p>Learning Today, Leading Tomorrow.</p>
 
-            <h3>Contact Information</h3>
-
-            <ul>
-
-                <li>
-                    <a href="tel:<?= e($school['phone']) ?>">
-                        <?= e($school['phone']) ?>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="mailto:<?= e($school['email']) ?>">
-                        <?= e($school['email']) ?>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="admission/index.php">
-                        Apply now
-                    </a>
-                </li>
-
-            </ul>
-
+        <div class="social-media">
+            <h3>Connect With GS KIGEME A</h3>
+            <p>Follow our school updates and stay connected with our community.</p>
+            <div class="social-links">
+                <a class="social-btn whatsapp" href="https://wa.me/250788600587" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
+                <a class="social-btn instagram" href="https://www.instagram.com/YOUR_INSTAGRAM_USERNAME/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram" aria-hidden="true"></i><span>Instagram</span></a>
+                <a class="social-btn facebook" href="https://www.facebook.com/YOUR_FACEBOOK_PAGE/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i><span>Facebook</span></a>
+                <a class="social-btn youtube" href="https://www.youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="bi bi-youtube" aria-hidden="true"></i><span>YouTube</span></a>
+            </div>
         </div>
-
-    </div>
-
-
-    <div class="copy">
-
-        &copy; <?= date('Y') ?>
-        <?= e($school['name']) ?>.
-        All rights reserved.
-
-    </div>
-
-</footer>
-
-
-<!-- ============================================================
-     BACK TO TOP
-============================================================ -->
-
-<button
-    class="top"
-    id="toTop"
-    type="button"
-    aria-label="Back to top"
-    title="Back to top"
->
-    ↑
-</button>
-
-
-<!-- ============================================================
-     JAVASCRIPT FUNCTIONS
-============================================================ -->
-
-<script>
-
-/* ================================================================
-   1. MOBILE NAVIGATION
-================================================================ */
-
-const menuToggle = document.getElementById('menuToggle');
-const mainNav = document.getElementById('mainNav');
-
-function openMenu() {
-
-    mainNav.classList.add('open');
-
-    menuToggle.setAttribute('aria-expanded', 'true');
-    menuToggle.setAttribute('aria-label', 'Close navigation menu');
-
-    menuToggle.textContent = '✕ Close';
-
-}
-
-function closeMenu() {
-
-    mainNav.classList.remove('open');
-
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Open navigation menu');
-
-    menuToggle.textContent = '☰ Menu';
-
-}
-
-menuToggle.addEventListener('click', function () {
-
-    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
-
-    if (isOpen) {
-        closeMenu();
-    } else {
-        openMenu();
-    }
-
-});
-
-
-/* Close menu after selecting a page */
-
-mainNav.querySelectorAll('a').forEach(function(link) {
-
-    link.addEventListener('click', closeMenu);
-
-});
-
-
-/* Close menu using Escape */
-
-document.addEventListener('keydown', function(event) {
-
-    if (event.key === 'Escape') {
-
-        closeMenu();
-
-    }
-
-});
-
-
-/* Close menu when clicking outside it */
-
-document.addEventListener('click', function(event) {
-
-    const clickedInside = mainNav.contains(event.target) ||
-                          menuToggle.contains(event.target);
-
-    if (!clickedInside) {
-        closeMenu();
-    }
-
-});
-
-
-/* ================================================================
-   2. BACK TO TOP BUTTON
-================================================================ */
-
-const topButton = document.getElementById('toTop');
-
-window.addEventListener('scroll', function() {
-
-    if (window.scrollY > 450) {
-
-        topButton.classList.add('show');
-
-    } else {
-
-        topButton.classList.remove('show');
-
-    }
-
-}, { passive: true });
-
-
-topButton.addEventListener('click', function() {
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-            ? 'auto'
-            : 'smooth'
-
-    });
-
-});
-
-
-/* ================================================================
-   3. ACTIVE SECTION HIGHLIGHTING
-================================================================ */
-
-const sideLinks = Array.from(
-    document.querySelectorAll('#sideMenu a')
-);
-
-const observedSections = sideLinks
-    .map(function(link) {
-
-        return document.querySelector(
-            link.getAttribute('href')
+    </footer>
+
+    <a class="whatsapp-float" href="https://wa.me/250788600587?text=Hello%20GS%20Kigeme%20A"
+       target="_blank" rel="noopener noreferrer" aria-label="Chat with GS KIGEME A on WhatsApp" title="Chat with us on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
+
+
+    <!-- Bootstrap JavaScript bundle (CDN; no Node.js required) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Close the mobile navigation after a menu item is selected.
+        const navToggle = document.getElementById('nav-toggle');
+        document.querySelectorAll('.main-nav a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (navToggle) navToggle.checked = false;
+            });
+        });
+
+        // Gentle reveal animation as sections enter the viewport.
+        const revealItems = document.querySelectorAll(
+            'section, .highlight-card, .academic-card, .student-card, .news-card, .contact-card'
         );
 
-    })
-    .filter(Boolean);
-
-
-if ('IntersectionObserver' in window) {
-
-    const sectionObserver = new IntersectionObserver(
-
-        function(entries) {
-
-            entries.forEach(function(entry) {
-
-                if (entry.isIntersecting) {
-
-                    sideLinks.forEach(function(link) {
-
-                        const isActive =
-                            link.getAttribute('href') ===
-                            '#' + entry.target.id;
-
-                        link.classList.toggle('active', isActive);
-
-                        if (isActive) {
-
-                            link.setAttribute('aria-current', 'location');
-
-                        } else {
-
-                            link.removeAttribute('aria-current');
-
-                        }
-
-                    });
-
-                }
-
+        if ('IntersectionObserver' in window &&
+            !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            revealItems.forEach(function (item) {
+                item.classList.add('reveal-ready');
             });
 
-        },
+            const observer = new IntersectionObserver(function (entries, currentObserver) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        currentObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
 
-        {
-            rootMargin: '-20% 0px -65% 0px',
-            threshold: 0
-        }
-
-    );
-
-
-    observedSections.forEach(function(section) {
-
-        sectionObserver.observe(section);
-
-    });
-
-}
-
-
-/* ================================================================
-   4. SCROLL REVEAL ANIMATIONS
-================================================================ */
-
-const revealElements = document.querySelectorAll('.reveal');
-
-const reduceMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-).matches;
-
-
-if ('IntersectionObserver' in window && !reduceMotion) {
-
-    const revealObserver = new IntersectionObserver(
-
-        function(entries, observer) {
-
-            entries.forEach(function(entry) {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add('visible');
-
-                    observer.unobserve(entry.target);
-
-                }
-
+            revealItems.forEach(function (item) {
+                observer.observe(item);
             });
-
-        },
-
-        {
-            threshold: 0.12
         }
-
-    );
-
-
-    revealElements.forEach(function(element) {
-
-        revealObserver.observe(element);
-
     });
-
-} else {
-
-    revealElements.forEach(function(element) {
-
-        element.classList.add('visible');
-
-    });
-
-}
-
-
-/* ================================================================
-   5. PRINT PAGE FUNCTION
-================================================================ */
-
-function printAboutPage() {
-
-    window.print();
-
-}
-
-
-/* ================================================================
-   6. SHARE PAGE FUNCTION
-================================================================ */
-
-async function shareAboutPage() {
-
-    const shareData = {
-
-        title: 'About GS Kigeme A',
-
-        text: 'Discover the history and educational journey of GS Kigeme A.',
-
-        url: window.location.href
-
-    };
-
-
-    try {
-
-        if (navigator.share) {
-
-            await navigator.share(shareData);
-
-        } else if (navigator.clipboard &&
-                   window.isSecureContext) {
-
-            await navigator.clipboard.writeText(shareData.url);
-
-            alert('Page link copied successfully!');
-
-        } else {
-
-            alert('Sharing is not available in this browser.');
-
-        }
-
-    } catch (error) {
-
-        if (error.name !== 'AbortError') {
-
-            console.error('Sharing failed:', error);
-
-        }
-
-    }
-
-}
-
-</script>
-
-</body>
+    </script>
+\n</body>
 </html>
