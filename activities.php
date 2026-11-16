@@ -1,240 +1,223 @@
+<?php
+/* activities.php | GS Kigeme A
+   Edit the arrays below, not the HTML. A card whose title starts with "["
+   shows as a yellow "to do" card until you remove the bracket. */
+
+$pageTitle = 'Activities | GS Kigeme A';
+$current   = basename($_SERVER['PHP_SELF']);
+$showHelp  = true; // set to false when you finish
+
+function e($text) { return htmlspecialchars((string)$text, ENT_QUOTES, 'UTF-8'); }
+function todoClass($title) { return strpos(trim($title), '[') === 0 ? ' todo' : ''; }
+
+$menu = [
+    'index.php'      => 'Home',
+    'about.php'      => 'About',
+    'discover.php'   => 'Discover',
+    'academic.php'   => 'Academic',
+    'activities.php' => 'Activities',
+    'contact.php'    => 'Contact',
+];
+
+// key => [filter button label, tag shown on the card, icon]
+$categories = [
+    'clubs'     => ['Clubs', 'Clubs', '🔬'],
+    'sports'    => ['Sports', 'Sports', '⚽'],
+    'culture'   => ['Music & Culture', 'Music & Culture', '🎶'],
+    'academic'  => ['Academic', 'Academic', '📚'],
+    'community' => ['Community & Environment', 'Community', '🌱'],
+];
+
+// [category, photo placeholder text, photo file (or ''), title, description, details]
+$activities = [
+    ['clubs', 'Photo: Science Club', '', 'Science & Innovation Club', 'Students design projects and simple inventions that solve real problems in our community.', 'When: [day and time] | Patron: [teacher name]'],
+    ['clubs', 'Photo: ICT Club', '', 'ICT & Digital Learning', 'Use of computers and ICT tools to make lessons more practical and interesting.', 'When: [day and time] | Patron: [teacher name]'],
+    ['sports', 'Photo: Football', '', '[Football]', '[Describe the team, training days and competitions.]', 'When: [day and time] | Coach: [name]'],
+    ['sports', 'Photo: Volleyball', '', '[Volleyball]', '[Describe the team and achievements.]', 'When: [day and time] | Coach: [name]'],
+    ['culture', 'Photo: Choir', '', '[School Choir]', '[Describe the choir and where it performs.]', 'When: [day and time] | Leader: [name]'],
+    ['culture', 'Photo: Traditional dance', '', '[Traditional Dance & Drama]', '[Describe performances and events.]', 'When: [day and time] | Leader: [name]'],
+    ['academic', 'Photo: Classroom', '', 'Competence-Based Learning', 'Students discuss, research and present their own ideas in class.', 'Who: [classes] | Teacher: [name]'],
+    ['academic', 'Photo: Debate', '', '[Debate & Reading Club]', '[Describe how students practise speaking and reading.]', 'When: [day and time] | Patron: [name]'],
+    ['community', 'Photo: Tree planting', '', 'Green School', 'Tree planting, gardens and clean environment activities led by students.', 'When: [day and time] | Patron: [teacher name]'],
+    ['community', 'Photo: Umuganda', '', '[Umuganda & Community Service]', '[Describe how students help the neighbouring community.]', 'When: [day and time] | Leader: [name]'],
+    // ADD NEW ACTIVITIES ABOVE THIS LINE
+];
+$counts = array_count_values(array_column($activities, 0)); // activities per category
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Activities | GS Kigeme A</title>
+<title><?= e($pageTitle) ?></title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:Segoe UI,Arial,sans-serif;color:#1f2937;line-height:1.7;background:#f9fafb}
-
-nav{background:#0b3d91;padding:12px 20px;text-align:center;position:sticky;top:0;z-index:10}
-nav a{color:#fff;text-decoration:none;margin:0 10px;font-weight:600;display:inline-block}
-nav a:hover,nav a.active{text-decoration:underline}
-
-header{background:linear-gradient(135deg,#0b3d91,#1e7a3c);color:#fff;text-align:center;padding:70px 20px}
-header h1{font-size:2.3rem;margin-bottom:10px}
-header p{max-width:650px;margin:auto;opacity:.95}
-
-main{max-width:1000px;margin:auto;padding:50px 20px}
-h2{color:#0b3d91;margin-bottom:8px;font-size:1.7rem}
-.lead{color:#475569;margin-bottom:20px}
-
-/* Filter buttons */
-.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-.filters button{border:2px solid #0b3d91;background:#fff;color:#0b3d91;padding:8px 18px;border-radius:20px;font:inherit;font-weight:600;cursor:pointer}
-.filters button:hover{background:#e8f0fb}
-.filters button.on{background:#0b3d91;color:#fff}
-
-/* Activity cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:20px}
-.activity{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden;display:flex;flex-direction:column}
-.activity .pic{height:150px;background:#cbd5e1;display:flex;align-items:center;justify-content:center;color:#475569;font-weight:600;font-size:.9rem;text-align:center;padding:10px}
-.activity .pic img{width:100%;height:100%;object-fit:cover}
-.activity .body{padding:20px;flex:1}
-.cat{display:inline-block;background:#e6f4ea;color:#1e7a3c;font-weight:700;font-size:.78rem;border-radius:6px;padding:2px 10px;margin-bottom:8px;text-transform:uppercase}
-.activity h3{color:#0b3d91;margin-bottom:6px}
-.meta{font-size:.88rem;color:#64748b;margin-top:10px}
-.todo{border:2px dashed #e0a800;background:#fff8e1}
-.todo h3{color:#7a5b00}
-
-.empty{display:none;text-align:center;padding:30px;color:#64748b}
-
-.help{margin-top:40px;background:#e8f0fb;border-radius:10px;padding:26px}
-.help h2{font-size:1.3rem}
-.help ol{margin:10px 0 0 20px}
-
-.join{margin-top:40px;background:#e6f4ea;border-radius:10px;padding:30px;text-align:center}
-.join a{display:inline-block;margin-top:12px;background:#1e7a3c;color:#fff;text-decoration:none;padding:12px 26px;border-radius:8px;font-weight:600}
-
-footer{text-align:center;padding:20px;background:#0b3d91;color:#fff;font-size:.9rem}
-
-@media(max-width:600px){header h1{font-size:1.8rem}nav a{margin:4px 6px}}
+:root{--blue:#0b3d91;--blue-d:#082c6c;--green:#1e7a3c}
+body{background:#f9fafb;scroll-behavior:smooth}
+.bg-brand{background:var(--blue)}
+.bg-brand-dark{background:var(--blue-d)}
+.btn-primary{--bs-btn-bg:var(--blue);--bs-btn-border-color:var(--blue);--bs-btn-hover-bg:var(--blue-d);--bs-btn-hover-border-color:var(--blue-d);--bs-btn-active-bg:var(--blue-d)}
+.btn-outline-primary{--bs-btn-color:var(--blue);--bs-btn-border-color:var(--blue);--bs-btn-hover-bg:var(--blue);--bs-btn-hover-border-color:var(--blue);--bs-btn-active-bg:var(--blue);--bs-btn-active-border-color:var(--blue)}
+.btn-success{--bs-btn-bg:var(--green);--bs-btn-border-color:var(--green);--bs-btn-hover-bg:#17622f;--bs-btn-hover-border-color:#17622f}
+.navbar .nav-link.active{font-weight:700;text-decoration:underline;text-underline-offset:8px}
+.hero{background:linear-gradient(135deg,var(--blue),var(--green));position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.07);top:-160px;right:-120px}
+.section-title::after{content:"";display:block;width:52px;height:4px;border-radius:4px;background:var(--green);margin-top:10px}
+.toolbar{top:56px;z-index:1010;background:rgba(249,250,251,.95);backdrop-filter:blur(8px)}
+#filters{scrollbar-width:none}
+.activity-col[data-cat=clubs]{--ac:#0b3d91}.activity-col[data-cat=sports]{--ac:#d9480f}.activity-col[data-cat=culture]{--ac:#7b2cbf}.activity-col[data-cat=academic]{--ac:#1e7a3c}.activity-col[data-cat=community]{--ac:#0e8a7d}
+.activity-card{border-top:4px solid var(--ac,var(--green))!important;transition:transform .25s,box-shadow .25s;animation:pop .35s}
+.activity-card:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(11,61,145,.18)!important}
+.activity-card.todo{border:2px dashed #e0a800!important}
+.pic{background:linear-gradient(135deg,#dbe5f7,#cbd5e1);color:#475569;font-weight:600;font-size:.9rem}
+.pic img{object-fit:cover}
+.ico{font-size:2.6rem;line-height:1}
+.cat-badge{color:var(--ac,var(--green));background:#eef2f7;background:color-mix(in srgb,var(--ac,#1e7a3c) 12%,#fff);text-transform:uppercase;letter-spacing:.5px}
+.cta{background:linear-gradient(135deg,#e6f4ea,#dbe8fb)}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.php">Home</a>
-  <a href="about.php">About</a>
-  <a href="discover.php">Discover</a>
-  <a href="activities.php" class="active">Activities</a>
-  <a href="contact.php">Contact</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-brand sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.php">GS Kigeme A</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <?php foreach ($menu as $file => $label): ?>
+          <li class="nav-item">
+            <a class="nav-link<?= $current === $file ? ' active' : '' ?>"<?= $current === $file ? ' aria-current="page"' : '' ?> href="<?= e($file) ?>"><?= e($label) ?></a>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+  </div>
 </nav>
 
-<header>
-  <h1>School Activities</h1>
-  <p>Learning at GS Kigeme A goes beyond the classroom. Discover the clubs, sports and programmes that help our students grow.</p>
+<header class="hero text-center text-white py-5">
+  <div class="container py-4 position-relative">
+    <h1 class="display-5 fw-bold">School Activities</h1>
+    <p class="lead mx-auto" style="max-width:650px">Learning at GS Kigeme A goes beyond the classroom. Discover the clubs, sports and programmes that help our students grow.</p>
+  </div>
 </header>
 
 <main>
-  <h2>What We Do</h2>
-  <p class="lead">Choose a category to see the activities.</p>
-
-  <div class="filters" id="filters">
-    <button class="on" data-cat="all">All</button>
-    <button data-cat="clubs">Clubs</button>
-    <button data-cat="sports">Sports</button>
-    <button data-cat="culture">Music &amp; Culture</button>
-    <button data-cat="academic">Academic</button>
-    <button data-cat="community">Community &amp; Environment</button>
+  <div class="toolbar sticky-top border-bottom py-3">
+    <div class="container">
+      <div class="input-group input-group-lg mb-3">
+        <span class="input-group-text bg-white rounded-start-pill ps-4">&#128269;</span>
+        <input type="search" class="form-control rounded-end-pill" id="search" placeholder="Search activities..." aria-label="Search activities" autocomplete="off">
+      </div>
+      <div class="d-flex gap-2 overflow-auto pb-1" id="filters" role="group" aria-label="Filter activities">
+        <button type="button" class="btn btn-outline-primary rounded-pill text-nowrap active" data-cat="all" aria-pressed="true">All <span class="badge text-bg-light ms-1"><?= count($activities) ?></span></button>
+        <?php foreach ($categories as $key => [$label, , $icon]): ?>
+          <button type="button" class="btn btn-outline-primary rounded-pill text-nowrap" data-cat="<?= e($key) ?>" aria-pressed="false"><?= e($icon) ?> <?= e($label) ?> <span class="badge text-bg-light ms-1"><?= (int)($counts[$key] ?? 0) ?></span></button>
+        <?php endforeach; ?>
+      </div>
+    </div>
   </div>
 
-  <div class="grid" id="grid">
+  <section class="container py-5" id="activities">
+    <h2 class="section-title fw-bold text-primary mb-2" style="color:var(--blue)!important">What We Do</h2>
+    <p class="text-secondary mt-3">Choose a category to see the activities. <span id="count" class="fw-semibold" aria-live="polite"></span></p>
 
-    <!-- ===== CLUBS ===== -->
-    <div class="activity" data-cat="clubs">
-      <div class="pic">Photo: Science Club</div>
-      <div class="body">
-        <span class="cat">Clubs</span>
-        <h3>Science &amp; Innovation Club</h3>
-        <p>Students design projects and simple inventions that solve real problems in our community.</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Patron: [teacher name]</p>
-      </div>
+    <div class="row g-4 mt-1" id="grid">
+      <?php foreach ($activities as [$cat, $pic, $img, $title, $text, $meta]): ?>
+        <div class="col-12 col-md-6 col-lg-4 activity-col" data-cat="<?= e($cat) ?>" data-text="<?= e(mb_strtolower($title . ' ' . $text . ' ' . $meta)) ?>">
+          <div class="card h-100 border-0 shadow-sm overflow-hidden activity-card<?= todoClass($title) ?>">
+            <div class="ratio ratio-16x9 pic">
+              <?php if ($img !== ''): ?>
+                <img src="<?= e($img) ?>" alt="<?= e($title) ?>" loading="lazy">
+              <?php else: ?>
+                <div class="d-flex flex-column align-items-center justify-content-center text-center gap-1 p-2">
+                  <span class="ico"><?= e($categories[$cat][2] ?? '📌') ?></span><?= e($pic) ?>
+                </div>
+              <?php endif; ?>
+            </div>
+            <div class="card-body">
+              <span class="badge rounded-pill cat-badge mb-2"><?= e($categories[$cat][1] ?? $cat) ?></span>
+              <h3 class="h5 card-title" style="color:var(--blue)"><?= e($title) ?></h3>
+              <p class="card-text text-secondary"><?= e($text) ?></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <?php foreach (explode(' | ', $meta) as $m): ?>
+                <li class="list-group-item small text-muted"><?= e($m) ?></li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+        </div>
+      <?php endforeach; ?>
     </div>
 
-    <div class="activity" data-cat="clubs">
-      <div class="pic">Photo: ICT Club</div>
-      <div class="body">
-        <span class="cat">Clubs</span>
-        <h3>ICT &amp; Digital Learning</h3>
-        <p>Use of computers and ICT tools to make lessons more practical and interesting.</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Patron: [teacher name]</p>
-      </div>
+    <div class="text-center py-5 d-none" id="empty">
+      <p class="text-secondary">No activities match your search.</p>
+      <button type="button" class="btn btn-primary rounded-pill px-4" id="reset">Show all activities</button>
     </div>
+  </section>
 
-    <!-- ===== SPORTS ===== -->
-    <div class="activity todo" data-cat="sports">
-      <div class="pic">Photo: Football</div>
-      <div class="body">
-        <span class="cat">Sports</span>
-        <h3>[Football]</h3>
-        <p>[Describe the team, training days and competitions.]</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Coach: [name]</p>
-      </div>
+  <?php if ($showHelp): ?>
+  <section class="container pb-4">
+    <div class="alert alert-warning border-2" style="border-style:dashed">
+      <h2 class="h5">How to add a new activity</h2>
+      <ol class="mb-0">
+        <li>Open <code>activities.php</code> and find <code>$activities</code> at the top.</li>
+        <li>Copy one line and paste it above "ADD NEW ACTIVITIES ABOVE THIS LINE".</li>
+        <li>Category must be one of: <code>clubs</code>, <code>sports</code>, <code>culture</code>, <code>academic</code>, <code>community</code>.</li>
+        <li>For a photo, put the file name in the third field, e.g. <code>'football.jpg'</code>.</li>
+        <li>Remove the <code>[ ]</code> from the title when complete. Set <code>$showHelp = false;</code> to hide this box.</li>
+      </ol>
     </div>
+  </section>
+  <?php endif; ?>
 
-    <div class="activity todo" data-cat="sports">
-      <div class="pic">Photo: Volleyball</div>
-      <div class="body">
-        <span class="cat">Sports</span>
-        <h3>[Volleyball]</h3>
-        <p>[Describe the team and achievements.]</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Coach: [name]</p>
-      </div>
+  <section class="container pb-5">
+    <div class="cta rounded-4 text-center p-5">
+      <h2 class="fw-bold" style="color:var(--blue)">Want to take part?</h2>
+      <p class="text-secondary">Ask about any activity and we will tell you how to join.</p>
+      <a class="btn btn-success btn-lg rounded-pill px-5 shadow" href="contact.php">Contact Us</a>
     </div>
-
-    <!-- ===== MUSIC & CULTURE ===== -->
-    <div class="activity todo" data-cat="culture">
-      <div class="pic">Photo: Choir</div>
-      <div class="body">
-        <span class="cat">Music &amp; Culture</span>
-        <h3>[School Choir]</h3>
-        <p>[Describe the choir and where it performs.]</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Leader: [name]</p>
-      </div>
-    </div>
-
-    <div class="activity todo" data-cat="culture">
-      <div class="pic">Photo: Traditional dance</div>
-      <div class="body">
-        <span class="cat">Music &amp; Culture</span>
-        <h3>[Traditional Dance &amp; Drama]</h3>
-        <p>[Describe performances and events.]</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Leader: [name]</p>
-      </div>
-    </div>
-
-    <!-- ===== ACADEMIC ===== -->
-    <div class="activity" data-cat="academic">
-      <div class="pic">Photo: Classroom</div>
-      <div class="body">
-        <span class="cat">Academic</span>
-        <h3>Competence-Based Learning</h3>
-        <p>Students discuss, research and present their own ideas in class.</p>
-        <p class="meta">Who: [classes] &nbsp;|&nbsp; Teacher: [name]</p>
-      </div>
-    </div>
-
-    <div class="activity todo" data-cat="academic">
-      <div class="pic">Photo: Debate</div>
-      <div class="body">
-        <span class="cat">Academic</span>
-        <h3>[Debate &amp; Reading Club]</h3>
-        <p>[Describe how students practise speaking and reading.]</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Patron: [name]</p>
-      </div>
-    </div>
-
-    <!-- ===== COMMUNITY & ENVIRONMENT ===== -->
-    <div class="activity" data-cat="community">
-      <div class="pic">Photo: Tree planting</div>
-      <div class="body">
-        <span class="cat">Community</span>
-        <h3>Green School</h3>
-        <p>Tree planting, gardens and clean environment activities led by students.</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Patron: [teacher name]</p>
-      </div>
-    </div>
-
-    <div class="activity todo" data-cat="community">
-      <div class="pic">Photo: Umuganda</div>
-      <div class="body">
-        <span class="cat">Community</span>
-        <h3>[Umuganda &amp; Community Service]</h3>
-        <p>[Describe how students help the neighbouring community.]</p>
-        <p class="meta">When: [day and time] &nbsp;|&nbsp; Leader: [name]</p>
-      </div>
-    </div>
-
-    <!-- ADD NEW ACTIVITIES ABOVE THIS LINE (see the template in the box at the bottom) -->
-
-  </div>
-
-  <p class="empty" id="empty">No activities in this category yet. Add one below.</p>
-
-  <div class="help">
-    <h2>How to add a new activity</h2>
-    <ol>
-      <li>Copy a whole <code>&lt;div class="activity"&gt; ... &lt;/div&gt;</code> block from this page.</li>
-      <li>Paste it above the comment "ADD NEW ACTIVITIES ABOVE THIS LINE".</li>
-      <li>Change <code>data-cat="..."</code> to one of: <code>clubs</code>, <code>sports</code>, <code>culture</code>, <code>academic</code>, <code>community</code>.</li>
-      <li>Change the title, description, day, time and teacher name.</li>
-      <li>For a photo, replace the text inside <code>&lt;div class="pic"&gt;</code> with <code>&lt;img src="photo.jpg" alt="description"&gt;</code>.</li>
-      <li>Remove the word <code>todo</code> from <code>class="activity todo"</code> once the card is complete (the yellow dashed border disappears).</li>
-    </ol>
-  </div>
-
-  <div class="join">
-    <h2>Want to take part?</h2>
-    <p>Ask about any activity and we will tell you how to join.</p>
-    <a href="contact.html">Contact Us</a>
-  </div>
+  </section>
 </main>
 
-<footer>&copy; 2026 GS Kigeme A. All rights reserved.</footer>
+<footer class="bg-brand-dark text-center text-white-50 py-4 small">
+  &copy; <?= date('Y') ?> GS Kigeme A. All rights reserved.
+</footer>
 
+<button id="up" class="btn btn-success rounded-circle shadow position-fixed bottom-0 end-0 m-3 d-none" style="width:46px;height:46px" aria-label="Back to top">&uarr;</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-var buttons = document.querySelectorAll('#filters button');
-var cards = document.querySelectorAll('#grid .activity');
-var empty = document.getElementById('empty');
-
-buttons.forEach(function(btn){
-  btn.addEventListener('click', function(){
-    buttons.forEach(function(b){ b.classList.remove('on'); });
-    btn.classList.add('on');
-    var cat = btn.getAttribute('data-cat');
-    var shown = 0;
-    cards.forEach(function(card){
-      var match = (cat === 'all' || card.getAttribute('data-cat') === cat);
-      card.style.display = match ? 'flex' : 'none';
-      if (match) shown++;
+(function(){
+  var btns=document.querySelectorAll('#filters button'),cols=document.querySelectorAll('#grid .activity-col'),
+      empty=document.getElementById('empty'),count=document.getElementById('count'),
+      q=document.getElementById('search'),up=document.getElementById('up'),cat='all';
+  function apply(){
+    var n=0,term=q.value.trim().toLowerCase();
+    btns.forEach(function(b){var on=b.dataset.cat===cat;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    cols.forEach(function(c){
+      var m=(cat==='all'||c.dataset.cat===cat)&&(!term||c.dataset.text.indexOf(term)>-1);
+      c.classList.toggle('d-none',!m);if(m)n++;
     });
-    empty.style.display = shown === 0 ? 'block' : 'none';
-  });
-});
+    empty.classList.toggle('d-none',n>0);
+    count.textContent='Showing '+n+(n===1?' activity':' activities');
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    cat=b.dataset.cat;apply();
+    history.replaceState(null,'',cat==='all'?location.pathname:'#'+cat);
+  });});
+  q.addEventListener('input',apply);
+  q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';apply();}});
+  document.getElementById('reset').addEventListener('click',function(){q.value='';cat='all';apply();});
+  addEventListener('scroll',function(){up.classList.toggle('d-none',scrollY<500);},{passive:true});
+  up.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});
+  var h=location.hash.slice(1);
+  if(h&&document.querySelector('#filters [data-cat="'+h+'"]'))cat=h;
+  apply();
+})();
 </script>
-
 </body>
 </html>
