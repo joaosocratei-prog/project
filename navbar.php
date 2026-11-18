@@ -1,11 +1,12 @@
 <?php
 // navbar.php  (ONE file: PHP + CSS + Bootstrap 5)
-// Use on every page, inside <body>, at the top:   <?php include 'navbar.php'; ?>
+// Use on every page, inside body, at the top: include 'navbar.php';
 
 $nav = [
     'index.php'    => 'Home',
     'about.php'    => 'About',
     'academic.php' => 'Academics',
+    'staff.php'    => 'Staff',
     'gallery.php'  => 'Gallery',
     'news.php'     => 'News',
     'contact.php'  => 'Contact',
@@ -26,10 +27,14 @@ $ctaPage    = 'contact.php'; // shown as a button
     --gs-blue:      #0a3d7a;
     --gs-blue-dark: #072b57;
     --gs-yellow:    #f6b800;
-    --gs-green:     #1a8a4a;
+    --gs-green:     #431a8a;
     --gs-ink:       #14233a;
+    --gs-green-text: #501580;
     --gs-muted:     #5b6b82;
     --gs-hover:     #eef3fa;
+    --gs-violet:      #6d28d9;
+    --gs-violet-dark: #d225cc;
+    --gs-violet-soft: #f1eafe;
 }
 
 /* Skip link */
@@ -44,7 +49,7 @@ $ctaPage    = 'contact.php'; // shown as a button
 /* Header */
 .site-header {
     position: sticky; top: 0; z-index: 1030;
-    background: #fff;
+    background: #2aa921;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
     transition: box-shadow .25s ease;
 }
@@ -56,46 +61,62 @@ $ctaPage    = 'contact.php'; // shown as a button
         var(--gs-blue) 0 50%, var(--gs-yellow) 50% 75%, var(--gs-green) 75% 100%);
 }
 
-.site-header .navbar { min-height: 72px; padding-top: 0; padding-bottom: 0; }
+.site-header .navbar { min-height: 90px; padding-top: 0; padding-bottom: 0; }
 
 /* Brand */
 .site-header .navbar-brand {
-    display: flex; align-items: center; gap: 12px; margin: 0; padding: 0;
+    display: flex; align-items: center; gap: 14px; margin: 0; padding: 0;
 }
 .brand-mark {
-    width: 44px; height: 44px; border-radius: 12px;
+    width: 60px; height: 60px; border-radius: 16px;
     background: var(--gs-blue); color: #fff;
     display: grid; place-items: center;
-    font-weight: 800; font-size: 17px; letter-spacing: .5px;
-    box-shadow: inset 0 -4px 0 var(--gs-yellow);
+    font-weight: 800; font-size: 24px; letter-spacing: .5px;
+    box-shadow: inset 0 -5px 0 var(--gs-yellow);
 }
 .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-.brand-text strong { font-size: 17px; font-weight: 800; color: var(--gs-blue); }
-.brand-text small  { font-size: 12.5px; font-weight: 500; color: var(--gs-muted); }
+.brand-text strong { font-size: 21px; font-weight: 800; color: var(--gs-blue); }
+.brand-text small  { font-size: 14px; font-weight: 500; color: var(--gs-muted); }
+
+/* Brand / toggler hover */
+.site-header .navbar-brand:hover .brand-mark { background: var(--gs-violet); }
+.site-header .navbar-brand:hover .brand-text strong { color: var(--gs-violet); }
+.brand-mark, .brand-text strong { transition: background .2s, color .2s; }
+.site-header .navbar-toggler:hover { background: var(--gs-violet-soft); }
 
 /* Links */
 .site-header .nav-link {
     position: relative;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-size: 15px; font-weight: 600;
-    color: var(--gs-ink);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 18px; font-weight: 600;
+    color: var(--gs-green-text);
     transition: background .2s, color .2s;
 }
-.site-header .nav-link:hover { background: var(--gs-hover); color: var(--gs-blue); }
-.site-header .nav-link.active { color: var(--gs-blue); }
-.site-header .nav-link.active::after {
-    content: ''; position: absolute; left: 14px; right: 14px; bottom: 3px;
-    height: 3px; border-radius: 3px; background: var(--gs-yellow);
+.site-header .nav-link::after {
+    content: ''; position: absolute; left: 18px; right: 18px; bottom: 3px;
+    height: 4px; border-radius: 3px; background: var(--gs-violet);
+    transform: scaleX(0); transform-origin: center;
+    transition: transform .25s ease, background .2s;
 }
+.site-header .nav-link:hover {
+    background: var(--gs-violet-soft); color: var(--gs-violet);
+}
+.site-header .nav-link:hover::after { transform: scaleX(1); background: var(--gs-violet); }
+.site-header .nav-link.active { color: var(--gs-blue); }
+.site-header .nav-link.active::after { transform: scaleX(1); background: var(--gs-yellow); }
+.site-header .nav-link.active:hover { color: var(--gs-violet); }
+.site-header .nav-link.active:hover::after { background: var(--gs-violet); }
 
 /* Contact button */
 .site-header .nav-link.nav-cta {
-    margin-left: 8px; padding: 10px 22px;
+    margin-left: 10px; padding: 12px 28px;
     background: var(--gs-blue); color: #fff; border-radius: 999px;
 }
-.site-header .nav-link.nav-cta:hover  { background: var(--gs-blue-dark); color: #fff; }
+.site-header .nav-link.nav-cta:hover  { background: var(--gs-violet); color: #fff; box-shadow: 0 6px 16px rgba(109, 40, 217, .35); }
 .site-header .nav-link.nav-cta.active { background: var(--gs-green); }
+.site-header .nav-link.nav-cta.active:hover { background: var(--gs-violet); color: #fff; }
+.site-header .nav-link.nav-cta::after,
 .site-header .nav-link.nav-cta.active::after { display: none; }
 
 /* Focus */
@@ -112,25 +133,30 @@ $ctaPage    = 'contact.php'; // shown as a button
 }
 
 /* Mobile / tablet */
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
     .site-header .navbar-collapse {
         position: absolute; top: 100%; left: 0; right: 0;
         background: #fff; border-top: 1px solid #e3eaf3;
         box-shadow: 0 16px 24px rgba(10, 61, 122, .14);
         padding: 12px 16px 20px;
-        max-height: calc(100vh - 77px); overflow-y: auto;
+        max-height: calc(100vh - 95px); overflow-y: auto;
     }
     .site-header .nav-link { padding: 14px 16px; font-size: 16px; }
     .site-header .nav-link.active { background: var(--gs-hover); }
-    .site-header .nav-link.active::after {
+    .site-header .nav-link::after {
         left: 0; right: auto; top: 12px; bottom: 12px; width: 4px; height: auto;
+        transform: scaleY(0);
     }
+    .site-header .nav-link:hover::after,
+    .site-header .nav-link.active::after { transform: scaleY(1); }
     .site-header .nav-link.nav-cta {
         margin: 8px 0 0; text-align: center; border-radius: 12px;
     }
 }
 
 @media (max-width: 420px) {
+    .brand-mark { width: 48px; height: 48px; font-size: 19px; border-radius: 13px; }
+    .brand-text strong { font-size: 17px; }
     .brand-text small { display: none; }
 }
 
@@ -144,7 +170,7 @@ $ctaPage    = 'contact.php'; // shown as a button
 <header class="site-header" id="siteHeader">
     <div class="tricolor" aria-hidden="true"></div>
 
-    <nav class="navbar navbar-expand-lg" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-xl" aria-label="Main navigation">
         <div class="container position-relative">
 
             <a class="navbar-brand" href="index.php" aria-label="<?= htmlspecialchars($siteName) ?> home">
@@ -163,7 +189,7 @@ $ctaPage    = 'contact.php'; // shown as a button
             </button>
 
             <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <ul class="navbar-nav ms-auto align-items-xl-center gap-xl-1">
                     <?php foreach ($nav as $file => $label):
                         $isActive = ($file === $current);
                         $isCta    = ($file === $ctaPage);
